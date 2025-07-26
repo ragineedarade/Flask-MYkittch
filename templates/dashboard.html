@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Account - MYKittech</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+         
+        <div class="logo">
+          <h1><a href="{{ url_for('main') }}">MYKittech</a></h1>
+        </div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
+            <li><a href="{{ url_for('meal_planner') }}">Meal Planner</a></li>
+            <li><a href="{{ url_for('submit_recipe') }}">Submit Recipe</a></li>
+            <li><a href="{{ url_for('my_account') }}">My Account</a></li>
+            <li>
+              <a href="{{ url_for('login_signup') }}" class="btn-primary"
+                >Sign Up / Login</a
+              >
+            </li>
+          </ul>
+          <div class="hamburger">
+            <i class="fas fa-bars"></i>
+          </div>
+        </nav>
+      </div>
+            
+      </div>
+    </header>
+
+    <main class="container page-content">
+      <section class="user-dashboard">
+        <h2>Welcome, Culinary Explorer!</h2>
+        <p>Your personalized hub for all things MYKittech.</p>
+
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <h3><i class="fas fa-bookmark"></i> My Saved Recipes</h3>
+            <p>Quick access to your favorite dishes.</p>
+            <a
+              href="#"
+              class="btn-small"
+              onclick="alert('This would load your saved recipes from a backend.')"
+              >View Recipes (30)</a
+            >
+            <div class="card-list">
+              <p>Chicken Curry, Veggie Lasagna, Chocolate Cake</p>
+            </div>
+          </div>
+          <div class="dashboard-card">
+            <h3><i class="fas fa-upload"></i> My Submitted Recipes</h3>
+            <p>Track the recipes you've shared with the community.</p>
+            <a
+              href="#"
+              class="btn-small"
+              onclick="alert('This would load your submitted recipes from a backend.')"
+              >View Submissions (5)</a
+            >
+            <div class="card-list">
+              <p>My Special Smoothie, Quick Pasta Salad</p>
+            </div>
+          </div>
+          <div class="dashboard-card">
+            <h3><i class="fas fa-calendar-alt"></i> My Meal Plans</h3>
+            <p>Manage your weekly and monthly meal schedules.</p>
+            <a href="meal-planner.html" class="btn-small">Go to Meal Planner</a>
+            <div class="card-list">
+              <p>This week: Mon: Curry, Tue: Pasta</p>
+            </div>
+          </div>
+          <div class="dashboard-card">
+            <h3><i class="fas fa-shopping-basket"></i> My Shopping Lists</h3>
+            <p>Your auto-generated grocery lists.</p>
+            <a href="meal-planner.html#shopping-list" class="btn-small"
+              >View Shopping Lists</a
+            >
+            <div class="card-list">
+              <p>Last list: Milk, Eggs, Chicken</p>
+            </div>
+          </div>
+          <div class="dashboard-card">
+            <h3><i class="fas fa-chart-line"></i> Personalized Feed</h3>
+            <p>Recommendations based on your activity and preferences.</p>
+            <a
+              href="#"
+              class="btn-small"
+              onclick="alert('This would show dynamic recommendations from a backend.')"
+              >See More</a
+            >
+            <div class="card-list">
+              <p>Recommended: Thai Green Curry, Vegan Burgers</p>
+            </div>
+          </div>
+          <div class="dashboard-card">
+            <h3><i class="fas fa-cog"></i> Account Settings</h3>
+            <p>Manage your profile, preferences, and notifications.</p>
+            <a
+              href="#"
+              class="btn-small"
+              onclick="alert('This would lead to a profile settings page.')"
+              >Edit Profile</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 MYKittech. All rights reserved.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+  </body>
+</html>

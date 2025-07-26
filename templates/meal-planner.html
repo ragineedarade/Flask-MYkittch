@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meal Planner - MYKittech</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+ <style>
+  /* Basic Reset & Body Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f7f6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background-color: #4caf50;
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #e0f2f1;
+}
+
+.btn-primary {
+    background-color: #ffc107;
+    color: #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border: none; /* Add border none to buttons */
+}
+
+.btn-primary:hover {
+    background-color: #ffd700;
+}
+
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #d0d0d0;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 1.8rem;
+    color: white;
+}
+
+/* Main Content */
+.page-content {
+    flex-grow: 1;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+}
+
+.meal-planner-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    width: 100%; /* Take full width of its container */
+    max-width: 900px; /* **Reduced max-width for the section** */
+    margin-bottom: 30px; /* Space before next section if any */
+}
+
+.meal-planner-section h2 {
+    color: #4caf50;
+    margin-bottom: 15px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.meal-planner-section p {
+    margin-bottom: 25px;
+    color: #555;
+    text-align: center;
+}
+
+.meal-planner-controls {
+    display: flex;
+    justify-content: center; /* Center buttons */
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.meal-planner-controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Calendar View */
+.calendar-view {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    width: 100%; /* Take full width of its container */
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #555;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.calendar-header button:hover {
+    background-color: #e0e0e0;
+}
+
+.calendar-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f8f8f8;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    color: #666;
+    text-align: center;
+}
+
+.weekdays span {
+    padding: 5px 0;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px; /* To create subtle borders */
+    background-color: #e0e0e0; /* Background for the grid lines */
+}
+
+.day-cell {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid transparent; /* acts as a base for drag-over border */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center day content */
+}
+
+.day-cell h4 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #4caf50;
+    text-align: center;
+}
+
+.meal-slot {
+    background-color: #f9f9f9;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    min-height: 40px;
+    display: flex;
+    flex-direction: column; /* Stack meal type and recipe */
+    justify-content: center;
+    align-items: center; /* Center content within slot */
+    color: #777;
+    font-size: 0.95rem;
+    position: relative; /* For eventual recipe removal icon */
+    width: 100%; /* Ensure slots take full width of day cell */
+    text-align: center;
+}
+
+.meal-slot span:first-child {
+    /* The "Breakfast:", "Lunch:", "Dinner:" part */
+    font-weight: 600; /* Make meal type label a bit bolder */
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.meal-slot.drag-over {
+    border-color: #4caf50;
+    background-color: #e6ffe6;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.meal-placeholder {
+    font-style: italic;
+    color: #aaa;
+    cursor: pointer; /* Indicate it's clickable */
+}
+
+.meal-placeholder:hover {
+    text-decoration: underline;
+}
+
+.meal-slot span[data-recipe-id] {
+    font-weight: bold;
+    color: #333;
+    cursor: pointer; /* To indicate it's clickable for removal */
+    position: relative;
+    padding-right: 20px; /* Space for a potential 'x' icon */
+    display: inline-block; /* Allow padding and positioning */
+    max-width: 90%; /* Prevent overflow for long names */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.meal-slot span[data-recipe-id]::after {
+    content: "\2715"; /* 'X' character */
+    font-size: 0.7em;
+    color: #c00;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.meal-slot span[data-recipe-id]:hover::after {
+    opacity: 1;
+}
+
+/* Available Recipes Section */
+.available-recipes-section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-top: 30px;
+    width: 100%;
+    max-width: 900px; /* Align with calendar section */
+}
+
+.available-recipes-section h3 {
+    color: #4caf50;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.draggable-recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(180px, 1fr)
+    ); /* Responsive grid for recipes */
+    gap: 15px;
+    padding-top: 10px;
+}
+
+.draggable-recipe {
+    background-color: #e8f5e9; /* Light green for recipes */
+    border: 1px solid #c8e6c9;
+    padding: 12px 15px;
+    border-radius: 8px;
+    cursor: grab;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2e7d32; /* Darker green text */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-out, background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.draggable-recipe:hover {
+    background-color: #dcedc8;
+}
+
+.draggable-recipe:active {
+    cursor: grabbing;
+    transform: scale(1.02);
+}
+
+/* Shopping List */
+.shopping-list-display {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 900px; /* Align with other sections */
+}
+
+.shopping-list-display h3 {
+    color: #4caf50;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.shopping-list-display ul {
+    list-style: disc inside;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.shopping-list-display ul li {
+    margin-bottom: 8px;
+    color: #444;
+}
+
+#shoppingListPlaceholder {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.social-links a {
+    color: white;
+    font-size: 1.5rem;
+    margin-left: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #4caf50;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .calendar-grid,
+    .weekdays {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns for tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    nav .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #4caf50;
+        position: absolute;
+        top: 70px; /* Adjust based on header height */
+        left: 0;
+        padding: 15px 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    nav .nav-links.nav-active {
+        display: flex;
+    }
+
+    nav .nav-links li {
+        margin: 10px 0;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .calendar-grid,
+    .weekdays {
+        grid-template-columns: repeat(
+            2,
+            1fr
+        ); /* 2 columns for smaller screens */
+    }
+
+    footer .container {
+        flex-direction: column;
+    }
+    .social-links {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-grid,
+    .weekdays {
+        grid-template-columns: 1fr; /* Single column for very small screens */
+    }
+    .day-cell {
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .day-cell:last-child {
+        border-bottom: none;
+    }
+}
+   
+
+ </style>
+   
+  </head>
+  <body>
+    <header>
+      <div class="container">
+         <div class="logo">
+          <h1><a href="{{ url_for('main') }}">MYKittech</a></h1>
+        </div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
+            <li><a href="{{ url_for('meal_planner') }}">Meal Planner</a></li>
+            <li><a href="{{ url_for('submit_recipe') }}">Submit Recipe</a></li>
+            <li><a href="{{ url_for('my_account') }}">My Account</a></li>
+            <li>
+              <a href="{{ url_for('login_signup') }}" class="btn-primary"
+                >Sign Up / Login</a
+              >
+            </li>
+          </ul>
+          <div class="hamburger">
+            <i class="fas fa-bars"></i>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-content">
+      <section class="meal-planner-section">
+        <h2>Your Weekly Meal Plan</h2>
+        <p>
+          Drag and drop recipes or click "Add Recipe" to plan your meals. Then,
+          generate your shopping list!
+        </p>
+
+        <div class="meal-planner-controls">
+          <button class="btn-primary" id="generateShoppingListBtn">
+            <i class="fas fa-shopping-basket"></i> Generate Shopping List
+          </button>
+          <button class="btn-secondary" id="clearPlannerBtn">
+            Clear Planner
+          </button>
+        </div>
+
+        <div class="calendar-view">
+          <div class="calendar-header">
+            <button id="prevWeekBtn">&lt;</button>
+            <h3 id="currentWeekDisplay"></h3>
+            <button id="nextWeekBtn">&gt;</button>
+          </div>
+          <div class="weekdays">
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+            <span>Sun</span>
+          </div>
+          <div class="calendar-grid">
+            <div class="day-cell" data-date="">
+              <h4></h4>
+              <div class="meal-slot" data-meal-type="breakfast">
+                <span>Breakfast:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="lunch">
+                <span>Lunch:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="dinner">
+                <span>Dinner:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+            </div>
+            <div class="day-cell" data-date="">
+              <h4></h4>
+              <div class="meal-slot" data-meal-type="breakfast">
+                <span>Breakfast:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="lunch">
+                <span>Lunch:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="dinner">
+                <span>Dinner:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+            </div>
+            <div class="day-cell" data-date="">
+              <h4></h4>
+              <div class="meal-slot" data-meal-type="breakfast">
+                <span>Breakfast:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="lunch">
+                <span>Lunch:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="dinner">
+                <span>Dinner:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+            </div>
+            <div class="day-cell" data-date="">
+              <h4></h4>
+              <div class="meal-slot" data-meal-type="breakfast">
+                <span>Breakfast:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="lunch">
+                <span>Lunch:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="dinner">
+                <span>Dinner:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+            </div>
+            <div class="day-cell" data-date="">
+              <h4></h4>
+              <div class="meal-slot" data-meal-type="breakfast">
+                <span>Breakfast:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="lunch">
+                <span>Lunch:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="dinner">
+                <span>Dinner:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+            </div>
+            <div class="day-cell" data-date="">
+              <h4></h4>
+              <div class="meal-slot" data-meal-type="breakfast">
+                <span>Breakfast:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="lunch">
+                <span>Lunch:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="dinner">
+                <span>Dinner:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+            </div>
+            <div class="day-cell" data-date="">
+              <h4></h4>
+              <div class="meal-slot" data-meal-type="breakfast">
+                <span>Breakfast:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="lunch">
+                <span>Lunch:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+              <div class="meal-slot" data-meal-type="dinner">
+                <span>Dinner:</span>
+                <span class="meal-placeholder">Add Recipe</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="available-recipes-section">
+        <h3>Available Recipes</h3>
+        <p>Drag these recipes into your meal planner above.</p>
+        <div class="draggable-recipes-grid">
+          <div
+            class="draggable-recipe"
+            draggable="true"
+            data-recipe-id="recipe-101"
+            data-recipe-name="Spicy Chicken Curry"
+          >
+            Spicy Chicken Curry
+          </div>
+          <div
+            class="draggable-recipe"
+            draggable="true"
+            data-recipe-id="recipe-102"
+            data-recipe-name="Vegan Lentil Soup"
+          >
+            Vegan Lentil Soup
+          </div>
+          <div
+            class="draggable-recipe"
+            draggable="true"
+            data-recipe-id="recipe-103"
+            data-recipe-name="Classic Pancakes"
+          >
+            Classic Pancakes
+          </div>
+          <div
+            class="draggable-recipe"
+            draggable="true"
+            data-recipe-id="recipe-104"
+            data-recipe-name="Beef Stir-fry"
+          >
+            Beef Stir-fry
+          </div>
+          <div
+            class="draggable-recipe"
+            draggable="true"
+            data-recipe-id="recipe-105"
+            data-recipe-name="Quinoa Salad"
+          >
+            Quinoa Salad
+          </div>
+          <div
+            class="draggable-recipe"
+            draggable="true"
+            data-recipe-id="recipe-106"
+            data-recipe-name="Fish Tacos"
+          >
+            Fish Tacos
+          </div>
+        </div>
+      </section>
+
+      <section class="shopping-list-display">
+        <h3>Shopping List (Generated from Meal Plan)</h3>
+        <p id="shoppingListPlaceholder">
+          <em
+            >(Shopping list will appear here once recipes are added to your plan
+            and generated.)</em
+          >
+        </p>
+        <ul id="shoppingListItems"></ul>
+        <button class="btn-primary" id="printListBtn">Print List</button>
+      </section>
+    </main>
+
+    <footer
+      style="
+        background: linear-gradient(to right,rgb(255, 255, 255),rgb(213, 213, 213));
+        color: #333;
+        padding: 60px 20px 40px;
+        font-size: 0.9em;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+      "
+    >
+      
+
+        <!-- Stay Connected column - now takes full width below the others -->
+        <div
+          class="footer-column"
+          style="
+            flex: 1 1 100%;
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(118, 210, 164, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+          "
+        >
+          <h4
+            style="
+              color: #ff6b6b;
+              font-size: 1.2em;
+              margin-bottom: 15px;
+              font-weight: 700;
+              position: relative;
+              padding-bottom: 5px;
+            "
+          >
+            Stay Connected
+          </h4>
+          <!-- ::after for underline cannot be inlined -->
+          <p style="font-size: 0.95em; line-height: 1.6; color: #555">
+            Join our newsletter for fresh recipes, exclusive content, and
+            culinary secrets delivered to your inbox.
+          </p>
+          <form
+            id="newsletterForm"
+            onsubmit="handleNewsletterSubscribe(event)"
+            class="newsletter-form"
+            style="
+              display: flex;
+              gap: 10px;
+              margin-top: 15px;
+              flex-wrap: wrap;
+              border-radius: 10px;
+              overflow: hidden;
+              box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+            "
+          >
+            <input
+              type="email"
+              id="newsletterEmailInput"
+              placeholder="Your Email Address"
+              required
+              aria-label="Email for Newsletter"
+              style="
+                flex-grow: 1;
+                padding: 15px;
+                border: none;
+                outline: none;
+                font-size: 1em;
+                background-color: white;
+                color: #333;
+                min-width: 150px;
+              "
+            />
+            <button
+              type="submit"
+              style="
+                background-color: #d32f2f;
+                color: white;
+                border: none;
+                padding: 15px 25px;
+                cursor: pointer;
+                font-size: 1em;
+                font-weight: 600;
+                white-space: nowrap;
+                flex-shrink: 0;
+              "
+            >
+              Subscribe
+            </button>
+          </form>
+          <span
+            id="newsletterStatusMessage"
+            style="margin-top: 10px; font-size: 0.9em; color: #555"
+          ></span>
+        </div>
+      </div>
+      <div
+        class="footer-bottom"
+        style="
+          text-align: center;
+          margin-top: 50px;
+          padding-top: 30px;
+          border-top: 1px dashed rgba(74, 74, 74, 0.4);
+          font-size: 0.9em;
+          color: rgba(74, 74, 74, 0.8);
+        "
+      >
+        &copy; 2025 MyKittchen. All rights reserved. |
+        <a
+          href="/privacy"
+          style="
+            color: rgba(74, 74, 74, 0.8);
+            text-decoration: none;
+            margin: 0 10px;
+          "
+          >Privacy Policy</a
+        >
+        |
+        <a
+          href="/terms"
+          style="
+            color: rgba(74, 74, 74, 0.8);
+            text-decoration: none;
+            margin: 0 10px;
+          "
+          >Terms of Service</a
+        >
+      </div>
+
+      <script>
+        function handleNewsletterSubscribe(event) {
+          event.preventDefault(); // Prevent the default form submission
+
+          const emailInput = document.getElementById("newsletterEmailInput");
+          const statusMessage = document.getElementById(
+            "newsletterStatusMessage"
+          );
+          const email = emailInput.value;
+
+          if (email) {
+            // Construct the mailto link
+            const mailtoLink = `mailto:ragineedarade@gmail.com?subject=Newsletter Subscription Request&body=I would like to subscribe to your newsletter. My email is: ${email}`;
+
+            // Attempt to open the mailto link
+            try {
+              window.location.href = mailtoLink;
+              statusMessage.style.color = "green";
+              statusMessage.textContent =
+                "Opening your email client to send subscription request...";
+              emailInput.value = ""; // Clear the input field
+            } catch (error) {
+              statusMessage.style.color = "red";
+              statusMessage.textContent =
+                "Could not open email client. Please try again or send manually.";
+              console.error("Error opening mailto link:", error);
+            }
+          } else {
+            statusMessage.style.color = "red";
+            statusMessage.textContent = "Please enter your email address.";
+          }
+        }
+      </script>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- DOM Elements ---
+        const currentWeekDisplay =
+          document.getElementById("currentWeekDisplay");
+        const prevWeekBtn = document.getElementById("prevWeekBtn");
+        const nextWeekBtn = document.getElementById("nextWeekBtn");
+        const dayCells = document.querySelectorAll(".calendar-grid .day-cell");
+        const mealSlots = document.querySelectorAll(".meal-slot"); // All meal slots
+        // Updated: Select draggable recipes from the new dedicated section
+        const draggableRecipes = document.querySelectorAll(
+          ".draggable-recipes-grid .draggable-recipe"
+        );
+        const clearPlannerBtn = document.getElementById("clearPlannerBtn");
+        const generateShoppingListBtn = document.getElementById(
+          "generateShoppingListBtn"
+        );
+        const shoppingListItems = document.getElementById("shoppingListItems");
+        const shoppingListPlaceholder = document.getElementById(
+          "shoppingListPlaceholder"
+        );
+        const printListBtn = document.getElementById("printListBtn");
+
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+
+        // --- State Variables ---
+        let currentWeekStartDate = new Date(); // Represents the Monday of the currently displayed week
+        // This array will hold the client-side representation of your meal plan
+        // In a real app, this would be loaded from and saved to a backend.
+        let clientMealPlan = []; // Structure: [{ date: 'YYYY-MM-DD', mealType: 'breakfast', recipeId: 'recipe-101', recipeName: 'Spicy Chicken Curry' }]
+
+        // --- Helper Functions ---
+
+        /**
+         * Gets the Monday of the week for a given date.
+         * @param {Date} date - The date object.
+         * @returns {Date} A new Date object set to the Monday of that week.
+         */
+        function getStartOfWeek(date) {
+          const d = new Date(date); // Create a new date object to avoid modifying the original
+          const day = d.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+          const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday (if day is Sunday, go back 6 days, otherwise go back (day-1) days)
+          d.setDate(diff);
+          d.setHours(0, 0, 0, 0); // Set to start of day
+          return d;
+        }
+
+        /**
+         * Formats a Date object to "Mon 27".
+         * @param {Date} date - The date object.
+         * @returns {string} Formatted day string.
+         */
+        function formatDay(date) {
+          const options = { weekday: "short", day: "numeric" };
+          return date.toLocaleDateString("en-US", options);
+        }
+
+        /**
+         * Formats a Date object to 'YYYY-MM-DD'.
+         * @param {Date} date - The date object.
+         * @returns {string} Formatted date string.
+         */
+        function formatDateYYYYMMDD(date) {
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          return `${year}-${month}-${day}`;
+        }
+
+        /**
+         * Updates the calendar display with the correct dates and populates meals.
+         */
+        function updateCalendarDisplay() {
+          const startOfWeek = getStartOfWeek(new Date(currentWeekStartDate));
+          const endOfWeek = new Date(startOfWeek);
+          endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+          // Update the main week display (e.g., "Week of Jun 24 - Jun 30, 2024")
+          const startMonth = startOfWeek.toLocaleString("en-US", {
+            month: "short",
+          });
+          const endMonth = endOfWeek.toLocaleString("en-US", {
+            month: "short",
+          });
+          const startDay = startOfWeek.getDate();
+          const endDay = endOfWeek.getDate();
+          const year = startOfWeek.getFullYear();
+
+          currentWeekDisplay.textContent = `Week of ${startMonth} ${startDay} - ${endMonth} ${endDay}, ${year}`;
+
+          // Update individual day cells and populate meals from clientMealPlan
+          dayCells.forEach((cell, index) => {
+            const dayDate = new Date(startOfWeek);
+            dayDate.setDate(startOfWeek.getDate() + index);
+            const formattedDate = formatDateYYYYMMDD(dayDate);
+
+            cell.querySelector("h4").textContent = formatDay(dayDate);
+            cell.dataset.date = formattedDate; // Store YYYY-MM-DD date in data attribute
+
+            // Clear existing meals in slots before re-populating
+            cell.querySelectorAll(".meal-slot").forEach((slot) => {
+              const mealType = slot.dataset.mealType;
+              // Keep the meal type label separate
+              slot.innerHTML = `<span>${
+                mealType.charAt(0).toUpperCase() + mealType.slice(1)
+              }:</span> <span class="meal-placeholder">Add Recipe</span>`;
+
+              // Re-attach the click listener for the placeholder
+              slot
+                .querySelector(".meal-placeholder")
+                .addEventListener("click", (event) => {
+                  handleMealPlaceholderClick(
+                    event,
+                    slot,
+                    formattedDate,
+                    mealType
+                  );
+                });
+            });
+
+            // Populate meals from clientMealPlan for this day
+            const mealsForThisDay = clientMealPlan.filter(
+              (meal) => meal.date === formattedDate
+            );
+            mealsForThisDay.forEach((meal) => {
+              const targetSlot = cell.querySelector(
+                `.meal-slot[data-meal-type="${meal.mealType}"]`
+              );
+              if (targetSlot) {
+                // Keep the meal type label, then add the recipe name span
+                targetSlot.innerHTML = `<span>${
+                  meal.mealType.charAt(0).toUpperCase() + meal.mealType.slice(1)
+                }:</span> <span data-recipe-id="${meal.recipeId}">${
+                  meal.recipeName
+                }</span>`;
+                // Re-attach removal listener
+                const addedRecipeSpan = targetSlot.querySelector(
+                  `[data-recipe-id="${meal.recipeId}"]`
+                );
+                if (addedRecipeSpan) {
+                  addedRecipeSpan.addEventListener("click", (e) => {
+                    // Prevent the parent drop event if this is a click on the recipe itself
+                    e.stopPropagation();
+                    removeRecipeFromSlot(
+                      targetSlot,
+                      meal.date,
+                      meal.mealType,
+                      meal.recipeName
+                    );
+                  });
+                }
+              }
+            });
+          });
+
+          // Re-generate shopping list based on current clientMealPlan
+          generateShoppingList();
+        }
+
+        /**
+         * Initializes the calendar to the current week.
+         */
+        function initializeCalendar() {
+          currentWeekStartDate = getStartOfWeek(new Date());
+          updateCalendarDisplay();
+          // In a real application, you'd load the initial meal plan here
+          // loadMealPlanForCurrentWeek();
+        }
+
+        // --- Backend Interaction (Conceptual) ---
+
+        /**
+         * Simulates saving a meal to a database.
+         * In a real application, this would make an AJAX (fetch) request to your backend.
+         * @param {string} date - Date of the meal (YYYY-MM-DD).
+         * @param {string} mealType - 'breakfast', 'lunch', or 'dinner'.
+         * @param {string} recipeId - The ID of the recipe.
+         * @param {string} recipeName - The name of the recipe.
+         */
+        async function saveMealToBackend(date, mealType, recipeId, recipeName) {
+          console.log(
+            `[Backend Mock] Attempting to save: ${recipeName} for ${mealType} on ${date} (ID: ${recipeId})`
+          );
+          // Example of a fetch request to a hypothetical API endpoint:
+          /*
+            try {
+                const response = await fetch('/api/meal-plan', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'Authorization': `Bearer YOUR_AUTH_TOKEN` // If authentication is needed
+                    },
+                    body: JSON.stringify({
+                        date: date,
+                        meal_type: mealType,
+                        recipe_id: recipeId,
+                        recipe_name: recipeName // Might only send ID, backend fetches name
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Failed to save meal: ${errorData.message || response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log('Meal saved successfully on backend:', data);
+                // After successful save, you might re-fetch the plan or update clientMealPlan
+            } catch (error) {
+                console.error('Error saving meal to backend:', error);
+                alert('Failed to save meal plan. Please try again.');
+            }
+            */
+          // For now, we'll just update the clientMealPlan array directly for demonstration:
+          const existingIndex = clientMealPlan.findIndex(
+            (m) => m.date === date && m.mealType === mealType
+          );
+          if (existingIndex !== -1) {
+            clientMealPlan[existingIndex] = {
+              date,
+              mealType,
+              recipeId,
+              recipeName,
+            };
+          } else {
+            clientMealPlan.push({ date, mealType, recipeId, recipeName });
+          }
+          generateShoppingList(); // Update shopping list immediately
+        }
+
+        /**
+         * Simulates deleting a meal from a database.
+         * In a real application, this would make an AJAX (fetch) request to your backend.
+         * @param {string} date - Date of the meal (YYYY-MM-DD).
+         * @param {string} mealType - 'breakfast', 'lunch', or 'dinner'.
+         */
+        async function deleteMealFromBackend(date, mealType) {
+          console.log(
+            `[Backend Mock] Attempting to delete: ${mealType} on ${date}`
+          );
+          // Example of a fetch request to a hypothetical API endpoint:
+          /*
+            try {
+                const response = await fetch(`/api/meal-plan/${date}/${mealType}`, { // Example DELETE endpoint
+                    method: 'DELETE',
+                    headers: {
+                        // 'Authorization': `Bearer YOUR_AUTH_TOKEN`
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Failed to delete meal: ${errorData.message || response.statusText}`);
+                }
+
+                console.log('Meal deleted successfully from backend.');
+                // After successful deletion, you might re-fetch the plan or update clientMealPlan
+            } catch (error) {
+                console.error('Error deleting meal from backend:', error);
+                alert('Failed to delete meal from plan. Please try again.');
+            }
+            */
+          // For now, update clientMealPlan directly:
+          clientMealPlan = clientMealPlan.filter(
+            (m) => !(m.date === date && m.mealType === mealType)
+          );
+          generateShoppingList(); // Update shopping list immediately
+        }
+
+        /**
+         * Simulates loading meal plan for the current week from a database.
+         * In a real app, this would make an AJAX (fetch) request to your backend.
+         */
+        async function loadMealPlanForCurrentWeek() {
+          console.log("[Backend Mock] Loading meal plan for current week...");
+          const startDate = formatDateYYYYMMDD(
+            getStartOfWeek(new Date(currentWeekStartDate))
+          );
+          const endDate = formatDateYYYYMMDD(
+            new Date(
+              getStartOfWeek(new Date(currentWeekStartDate)).setDate(
+                getStartOfWeek(new Date(currentWeekStartDate)).getDate() + 6
+              )
+            )
+          );
+
+          // Example of a fetch request:
+          /*
+            try {
+                const response = await fetch(`/api/meal-plan?start_date=${startDate}&end_date=${endDate}`, {
+                    headers: {
+                        // 'Authorization': `Bearer YOUR_AUTH_TOKEN`
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Failed to load meal plan: ${errorData.message || response.statusText}`);
+                }
+
+                const data = await response.json();
+                clientMealPlan = data; // Assuming data is an array of meal objects
+                console.log("Meal plan loaded from backend:", clientMealPlan);
+                updateCalendarDisplay(); // Re-render calendar with loaded data
+            } catch (error) {
+                console.error('Error loading meal plan from backend:', error);
+                alert('Failed to load meal plan. Displaying empty plan.');
+                clientMealPlan = []; // Clear plan if loading fails
+                updateCalendarDisplay();
+            }
+            */
+
+          // For demonstration, populate with some dummy data if clientMealPlan is empty (optional)
+          // This ensures you see something when you first open the page
+          if (clientMealPlan.length === 0) {
+            clientMealPlan = [
+              {
+                date: formatDateYYYYMMDD(
+                  new Date(
+                    currentWeekStartDate.getFullYear(),
+                    currentWeekStartDate.getMonth(),
+                    currentWeekStartDate.getDate() + 0
+                  )
+                ),
+                mealType: "dinner",
+                recipeId: "recipe-101",
+                recipeName: "Spicy Chicken Curry",
+              },
+              {
+                date: formatDateYYYYMMDD(
+                  new Date(
+                    currentWeekStartDate.getFullYear(),
+                    currentWeekStartDate.getMonth(),
+                    currentWeekStartDate.getDate() + 1
+                  )
+                ),
+                mealType: "lunch",
+                recipeId: "recipe-102",
+                recipeName: "Vegan Lentil Soup",
+              },
+              {
+                date: formatDateYYYYMMDD(
+                  new Date(
+                    currentWeekStartDate.getFullYear(),
+                    currentWeekStartDate.getMonth(),
+                    currentWeekStartDate.getDate() + 2
+                  )
+                ),
+                mealType: "breakfast",
+                recipeId: "recipe-103",
+                recipeName: "Classic Pancakes",
+              },
+            ];
+          }
+
+          updateCalendarDisplay(); // Ensure calendar is updated with loaded/dummy data
+        }
+
+        // --- Drag and Drop Logic ---
+
+        // Make all draggable recipe elements actually draggable
+        draggableRecipes.forEach((recipe) => {
+          recipe.addEventListener("dragstart", (e) => {
+            // Set data to be transferred. Using JSON.stringify to transfer multiple pieces of data.
+            const recipeData = {
+              id: recipe.dataset.recipeId,
+              name: recipe.dataset.recipeName,
+            };
+            e.dataTransfer.setData(
+              "application/json",
+              JSON.stringify(recipeData)
+            );
+            e.dataTransfer.effectAllowed = "copy"; // Indicates a copy operation
+          });
+        });
+
+        // Add drag and drop listeners to meal slots
+        mealSlots.forEach((slot) => {
+          slot.addEventListener("dragover", (e) => {
+            e.preventDefault(); // Crucial: Allows a drop to happen
+            e.dataTransfer.dropEffect = "copy"; // Visual feedback for the user
+            slot.classList.add("drag-over"); // Optional: Add visual feedback for active drop target
+          });
+
+          slot.addEventListener("dragleave", () => {
+            slot.classList.remove("drag-over"); // Remove visual feedback
+          });
+
+          slot.addEventListener("drop", (e) => {
+            e.preventDefault();
+            slot.classList.remove("drag-over"); // Remove visual feedback
+
+            try {
+              const data = JSON.parse(
+                e.dataTransfer.getData("application/json")
+              );
+              const recipeId = data.id;
+              const recipeName = data.name;
+
+              const parentDayCell = slot.closest(".day-cell");
+              const mealDate = parentDayCell.dataset.date; // YYYY-MM-DD date for the day
+              const mealType = slot.dataset.mealType; // 'breakfast', 'lunch', 'dinner'
+
+              if (recipeId && recipeName && mealDate && mealType) {
+                // Update the DOM: Keep the meal type label, then add the recipe name span
+                slot.innerHTML = `<span>${
+                  mealType.charAt(0).toUpperCase() + mealType.slice(1)
+                }:</span> <span data-recipe-id="${recipeId}">${recipeName}</span>`;
+
+                // Save to backend (conceptual) and update client-side data
+                saveMealToBackend(mealDate, mealType, recipeId, recipeName);
+
+                // Add a click listener to remove the recipe later
+                const addedRecipeSpan = slot.querySelector(
+                  `[data-recipe-id="${recipeId}"]`
+                );
+                if (addedRecipeSpan) {
+                  addedRecipeSpan.addEventListener("click", (event) => {
+                    // Prevent event from bubbling up to parent drop zone
+                    event.stopPropagation();
+                    removeRecipeFromSlot(slot, mealDate, mealType, recipeName);
+                  });
+                }
+              } else {
+                console.warn("Dropped item missing required data:", data);
+              }
+            } catch (error) {
+              console.error("Error parsing dropped data:", error);
+            }
+          });
+        });
+
+        // Function to remove a recipe from a slot
+        function removeRecipeFromSlot(slot, mealDate, mealType, recipeName) {
+          if (
+            confirm(`Remove ${recipeName} from ${mealType} on ${mealDate}?`)
+          ) {
+            // Restore the original structure with the placeholder
+            slot.innerHTML = `<span>${
+              mealType.charAt(0).toUpperCase() + mealType.slice(1)
+            }:</span> <span class="meal-placeholder">Add Recipe</span>`;
+            // Re-attach the click listener for the placeholder after removal
+            slot
+              .querySelector(".meal-placeholder")
+              .addEventListener("click", (event) => {
+                handleMealPlaceholderClick(event, slot, mealDate, mealType);
+              });
+            deleteMealFromBackend(mealDate, mealType); // Delete from backend
+          }
+        }
+
+        // --- New Feature: Type-In Meal Logic ---
+        function handleMealPlaceholderClick(event, slot, mealDate, mealType) {
+          event.stopPropagation(); // Prevent drag-and-drop actions from triggering
+
+          const mealName = prompt(
+            `Enter meal for ${
+              mealType.charAt(0).toUpperCase() + mealType.slice(1)
+            } on ${mealDate}:`
+          );
+
+          if (mealName && mealName.trim() !== "") {
+            const cleanedMealName = mealName.trim();
+            // Assign a unique ID for custom entries, distinct from recipe IDs
+            const customRecipeId = `custom-meal-${Date.now()}-${Math.random()
+              .toString(36)
+              .substring(2, 9)}`;
+
+            // Update the DOM: Keep the meal type label, then add the custom meal name span
+            slot.innerHTML = `<span>${
+              mealType.charAt(0).toUpperCase() + mealType.slice(1)
+            }:</span> <span data-recipe-id="${customRecipeId}">${cleanedMealName}</span>`;
+
+            // Save to backend (conceptual) and update client-side data
+            saveMealToBackend(
+              mealDate,
+              mealType,
+              customRecipeId,
+              cleanedMealName
+            );
+
+            // Add a click listener to remove this custom entry
+            const addedRecipeSpan = slot.querySelector(
+              `[data-recipe-id="${customRecipeId}"]`
+            );
+            if (addedRecipeSpan) {
+              addedRecipeSpan.addEventListener("click", (e) => {
+                e.stopPropagation();
+                removeRecipeFromSlot(slot, mealDate, mealType, cleanedMealName);
+              });
+            }
+          }
+        }
+
+        // Attach initial click listeners to all meal placeholders when the page first loads
+        // This is necessary because `updateCalendarDisplay` runs on DOMContentLoaded,
+        // and it also re-attaches these listeners. This initial loop catches any
+        // placeholders that might be present before the first full display update.
+        document
+          .querySelectorAll(".meal-slot .meal-placeholder")
+          .forEach((placeholder) => {
+            placeholder.addEventListener("click", (event) => {
+              const slot = placeholder.closest(".meal-slot");
+              const parentDayCell = slot.closest(".day-cell");
+              const mealDate = parentDayCell.dataset.date; // Get date from parent cell
+              const mealType = slot.dataset.mealType;
+
+              // Ensure mealDate is available. It might not be immediately set on initial page load
+              // if `updateCalendarDisplay` hasn't fully run, but it will be correct when `updateCalendarDisplay`
+              // re-attaches handlers.
+              if (mealDate) {
+                handleMealPlaceholderClick(event, slot, mealDate, mealType);
+              } else {
+                // Fallback for initial load if date isn't ready. UpdateCalendarDisplay will correct this.
+                // console.warn("Date not yet set for day cell, cannot add meal via click initially.");
+              }
+            });
+          });
+
+        // --- Event Listeners ---
+
+        prevWeekBtn.addEventListener("click", () => {
+          currentWeekStartDate.setDate(currentWeekStartDate.getDate() - 7);
+          updateCalendarDisplay();
+        });
+
+        nextWeekBtn.addEventListener("click", () => {
+          currentWeekStartDate.setDate(currentWeekStartDate.getDate() + 7);
+          updateCalendarDisplay();
+        });
+
+        clearPlannerBtn.addEventListener("click", () => {
+          if (
+            confirm(
+              "Are you sure you want to clear your entire meal plan? This action cannot be undone (client-side only)."
+            )
+          ) {
+            clientMealPlan = []; // Clear local data
+            // In a real app, you'd send a request to backend to clear for the user/week
+            // Or iterate clientMealPlan and call deleteMealFromBackend for each
+            updateCalendarDisplay(); // Re-render empty calendar
+            alert("Meal planner cleared (client-side only).");
+          }
+        });
+
+        generateShoppingListBtn.addEventListener("click", generateShoppingList);
+
+        printListBtn.addEventListener("click", () => {
+          window.print(); // Uses browser's native print functionality
+        });
+
+        // Hamburger menu functionality
+        if (hamburger && navLinks) {
+          hamburger.addEventListener("click", () => {
+            navLinks.classList.toggle("nav-active");
+          });
+        }
+
+        // --- Shopping List Generation ---
+        function generateShoppingList() {
+          shoppingListItems.innerHTML = ""; // Clear previous list
+          shoppingListPlaceholder.style.display = "block"; // Show placeholder by default
+          shoppingListPlaceholder.textContent =
+            "(Shopping list will appear here once recipes are added to your plan and generated.)";
+
+          if (clientMealPlan.length === 0) {
+            return;
+          }
+
+          // In a real application, you'd send the list of recipe IDs
+          // in clientMealPlan to your backend. The backend would then
+          // look up ingredients for each recipe and aggregate them based
+          // on quantity and unit.
+          // For this frontend-only example, we'll use dummy ingredient data.
+
+          const ingredients = {}; // Use an object to aggregate ingredients by name/item
+          const customMealsForList = []; // To list custom meals separately
+
+          // Dummy ingredient data for your example recipes
+          const dummyRecipeIngredients = {
+            "recipe-101": {
+              // Spicy Chicken Curry
+              "Chicken Thighs": "2 lbs",
+              Onion: "1 large",
+              Tomatoes: "4 medium",
+              "Curry Powder": "3 tbsp",
+              "Coconut Milk": "1 can",
+              "Basmati Rice": "2 cups",
+            },
+            "recipe-102": {
+              // Vegan Lentil Soup
+              "Red Lentils": "1 cup",
+              Carrots: "2 medium",
+              "Celery Stalks": "2",
+              "Vegetable Broth": "4 cups",
+              Spinach: "1 bag (5 oz)",
+            },
+            "recipe-103": {
+              // Classic Pancakes
+              "All-Purpose Flour": "1.5 cups",
+              Milk: "1.25 cups",
+              Egg: "1 large",
+              "Baking Powder": "3.5 tsp",
+              Sugar: "1 tbsp",
+              Salt: "0.25 tsp",
+            },
+            "recipe-104": {
+              // Beef Stir-fry
+              "Beef Sirloin": "1 lb",
+              "Broccoli Florets": "3 cups",
+              "Bell Peppers (any color)": "2 large",
+              "Soy Sauce": "0.5 cup",
+              Ginger: "1 inch piece",
+              Garlic: "3 cloves",
+            },
+            "recipe-105": {
+              // Quinoa Salad
+              Quinoa: "1 cup",
+              Cucumber: "1 large",
+              "Cherry Tomatoes": "1 pint",
+              "Feta Cheese": "4 oz",
+              Lemon: "1",
+              "Olive Oil": "0.25 cup",
+            },
+            "recipe-106": {
+              // Fish Tacos
+              "Tilapia Fillets": "1.5 lbs",
+              "Corn Tortillas": "12",
+              "Cabbage (shredded)": "0.5 head",
+              Avocado: "2",
+              Lime: "2",
+              Cilantro: "1 bunch",
+            },
+          };
+
+          clientMealPlan.forEach((meal) => {
+            // For custom-typed meals, we don't have ingredients, so list them separately
+            if (meal.recipeId.startsWith("custom-meal-")) {
+              customMealsForList.push(meal.recipeName);
+              return; // Skip to the next meal
+            }
+
+            const recipeIngredients = dummyRecipeIngredients[meal.recipeId];
+            if (recipeIngredients) {
+              for (const item in recipeIngredients) {
+                const quantity = recipeIngredients[item];
+                if (ingredients[item]) {
+                  // This is a very basic aggregation for demo.
+                  // For a real app, you'd need a robust unit parsing and summing library.
+                  // For now, if an item exists, we'll just add it as a new line for simplicity
+                  // or you could make it a set to ensure unique items if quantities don't matter.
+                  ingredients[item] = `${ingredients[item]}, ${quantity}`; // Appends if already there
+                } else {
+                  ingredients[item] = quantity;
+                }
+              }
+            } else {
+              console.warn(
+                `No dummy ingredients found for recipe ID: ${meal.recipeId}`
+              );
+            }
+          });
+
+          const sortedIngredientNames = Object.keys(ingredients).sort();
+
+          if (
+            sortedIngredientNames.length > 0 ||
+            customMealsForList.length > 0
+          ) {
+            shoppingListPlaceholder.style.display = "none"; // Hide placeholder if list generated
+
+            // Add standard ingredients first
+            if (sortedIngredientNames.length > 0) {
+              const headingLi = document.createElement("li");
+              headingLi.innerHTML =
+                "<strong>Ingredients from Planned Recipes:</strong>";
+              headingLi.style.listStyle = "none"; // Remove bullet for heading
+              shoppingListItems.appendChild(headingLi);
+              sortedIngredientNames.forEach((item) => {
+                const li = document.createElement("li");
+                li.textContent = `${ingredients[item]} ${item}`;
+                shoppingListItems.appendChild(li);
+              });
+            }
+
+            // Add custom meals section if any
+            if (customMealsForList.length > 0) {
+              const customHeadingLi = document.createElement("li");
+              customHeadingLi.innerHTML =
+                "<br><strong>Custom Meals (No Ingredients Listed):</strong>";
+              customHeadingLi.style.listStyle = "none";
+              shoppingListItems.appendChild(customHeadingLi);
+              customMealsForList.forEach((mealName) => {
+                const li = document.createElement("li");
+                li.textContent = mealName;
+                shoppingListItems.appendChild(li);
+              });
+            }
+          } else {
+            shoppingListPlaceholder.textContent =
+              "No ingredients to display based on your planned meals.";
+          }
+        }
+
+        // --- Initial Setup ---
+        initializeCalendar(); // Set up calendar on page load
+        // Initially load any dummy/saved meals and display them
+        loadMealPlanForCurrentWeek(); // This will also call updateCalendarDisplay internally
+
+        // Initial call to generate shopping list after any dummy data/loading
+        // This is also called by updateCalendarDisplay, but having it explicitly here
+        // ensures it runs even if loadMealPlanForCurrentWeek is empty or simulated.
+        generateShoppingList();
+      });
+    </script>
+  </body>
+</html>

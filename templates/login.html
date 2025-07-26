@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login or Register</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Google icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* Custom styles for Inter font and general layout */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f2f5; /* Light gray background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+      .login-container {
+        background-color: #ffffff;
+        padding: 2.5rem; /* Increased padding */
+        border-radius: 1.5rem; /* More rounded corners */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+        max-width: 450px; /* Slightly wider container */
+        width: 90%;
+        text-align: center;
+        border: 1px solid #e0e0e0; /* Subtle border */
+      }
+      .input-field {
+        width: 100%;
+        padding: 0.85rem 1rem; /* Adjusted padding */
+        margin-bottom: 1rem;
+        border: 1px solid #d1d5db; /* Light gray border */
+        border-radius: 0.75rem; /* Rounded input fields */
+        font-size: 1rem;
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+      .input-field:focus {
+        outline: none;
+        border-color: #3b82f6; /* Blue border on focus */
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); /* Light blue shadow on focus */
+      }
+      .btn {
+        width: 100%;
+        padding: 0.9rem 1.25rem; /* Adjusted padding */
+        border-radius: 0.75rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out,
+          transform 0.1s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem; /* Space between icon and text */
+      }
+      .btn-primary {
+        background-color: #2563eb; /* Darker blue */
+        color: white;
+        border: none;
+      }
+      .btn-primary:hover {
+        background-color: #1d4ed8; /* Even darker blue on hover */
+        transform: translateY(-1px);
+      }
+      .btn-google {
+        background-color: #ffffff;
+        color: #4b5563; /* Dark gray text */
+        border: 1px solid #d1d5db; /* Light gray border */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+      }
+      .btn-google:hover {
+        background-color: #f9fafb; /* Lighter background on hover */
+        border-color: #9ca3af; /* Darker border on hover */
+        transform: translateY(-1px);
+      }
+      .google-icon {
+        font-size: 1.25rem; /* Larger icon */
+        color: #ea4335; /* Google red */
+      }
+      .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 1.5rem 0;
+        color: #9ca3af;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .divider:not(:empty)::before {
+        margin-right: 0.75rem;
+      }
+      .divider:not(:empty)::after {
+        margin-left: 0.75rem;
+      }
+      .message-box {
+        background-color: #d1fae5; /* Light green for success */
+        color: #065f46; /* Dark green text */
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+        text-align: left;
+        border: 1px solid #34d399;
+        display: none; /* Hidden by default */
+      }
+      .message-box.error {
+        background-color: #fee2e2; /* Light red for error */
+        color: #991b1b; /* Dark red text */
+        border: 1px solid #ef4444;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2 id="formTitle" class="text-3xl font-bold text-gray-800 mb-6">
+        Welcome Back!
+      </h2>
+
+      <div id="messageBox" class="message-box"></div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email Address"
+            class="input-field"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+            class="input-field"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Log In</button>
+      </form>
+
+      <!-- Sign Up Form (hidden by default) -->
+      <form id="signupForm" class="space-y-4 hidden">
+        <div>
+          <input
+            type="text"
+            id="signupName"
+            placeholder="Full Name"
+            class="input-field"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="email"
+            id="signupEmail"
+            placeholder="Email Address"
+            class="input-field"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            id="signupPassword"
+            placeholder="Password"
+            class="input-field"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            class="input-field"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+
+      <div class="divider">OR</div>
+
+      <button id="googleLoginBtn" class="btn btn-google">
+        <i class="fab fa-google google-icon"></i>
+        Continue with Google
+      </button>
+
+      <p class="text-gray-600 text-sm mt-6">
+        <span id="toggleText">Don't have an account?</span>
+        <a href="#" id="toggleFormLink" class="text-blue-600 hover:underline"
+          >Sign Up</a
+        >
+      </p>
+    </div>
+
+    <script>
+      // Function to display messages in the message box
+      function showMessage(message, type = "success") {
+        const messageBox = document.getElementById("messageBox");
+        messageBox.textContent = message;
+        messageBox.className = `message-box ${type}`; // Add type class for styling
+        messageBox.style.display = "block"; // Show the message box
+        setTimeout(() => {
+          messageBox.style.display = "none"; // Hide after 5 seconds
+        }, 5000);
+      }
+
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+      const formTitle = document.getElementById("formTitle");
+      const toggleText = document.getElementById("toggleText");
+      const toggleFormLink = document.getElementById("toggleFormLink");
+
+      // Function to toggle between login and signup forms
+      function toggleForms(showSignup) {
+        if (showSignup) {
+          loginForm.classList.add("hidden");
+          signupForm.classList.remove("hidden");
+          formTitle.textContent = "Create Your Account";
+          toggleText.textContent = "Already have an account?";
+          toggleFormLink.textContent = "Log In";
+        } else {
+          loginForm.classList.remove("hidden");
+          signupForm.classList.add("hidden");
+          formTitle.textContent = "Welcome Back!";
+          toggleText.textContent = "Don't have an account?";
+          toggleFormLink.textContent = "Sign Up";
+        }
+      }
+
+      // Initial state: show login form
+      toggleForms(false);
+
+      // Event listener for toggling forms
+      toggleFormLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        const isSignupVisible = signupForm.classList.contains("hidden");
+        toggleForms(isSignupVisible);
+      });
+
+      // Handle standard login form submission
+      loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+
+        try {
+          const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showMessage("Login successful! Redirecting...", "success");
+            // Redirect or update UI on successful login
+            window.location.href = "/dashboard"; // Redirect to your dashboard page
+          } else {
+            showMessage(
+              data.message || "Login failed. Please check your credentials.",
+              "error"
+            );
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          showMessage(
+            "An error occurred during login. Please try again.",
+            "error"
+          );
+        }
+      });
+
+      // Handle sign up form submission
+      signupForm.addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const name = document.getElementById("signupName").value;
+        const email = document.getElementById("signupEmail").value;
+        const password = document.getElementById("signupPassword").value;
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+          showMessage("Passwords do not match. Please try again.", "error");
+          return;
+        }
+
+        try {
+          const response = await fetch("/api/signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, email, password }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showMessage(
+              "Account created successfully! Please log in.",
+              "success"
+            );
+            toggleForms(false); // Switch back to login form after successful signup
+          } else {
+            showMessage(
+              data.message || "Sign up failed. Please try again.",
+              "error"
+            );
+          }
+        } catch (error) {
+          console.error("Sign up error:", error);
+          showMessage(
+            "An error occurred during sign up. Please try again.",
+            "error"
+          );
+        }
+      });
+
+      // Handle Google login button click
+      document
+        .getElementById("googleLoginBtn")
+        .addEventListener("click", async function () {
+          // This will redirect the user to your Flask backend's Google OAuth initiation endpoint.
+          // Your Flask backend would then redirect to Google's authentication page.
+          showMessage("Initiating Google login...", "success");
+          window.location.href = "/auth/google"; // Directs to your Flask /auth/google endpoint
+        });
+    </script>
+  </body>
+</html>

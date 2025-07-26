@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipes - MYKittech</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+         <div class="logo">
+          <h1><a href="{{ url_for('main') }}">MYKittech</a></h1>
+        </div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
+            <li><a href="{{ url_for('meal_planner') }}">Meal Planner</a></li>
+            <li><a href="{{ url_for('submit_recipe') }}">Submit Recipe</a></li>
+            <li><a href="{{ url_for('my_account') }}">My Account</a></li>
+            <li>
+              <a href="{{ url_for('login_signup') }}" class="btn-primary"
+                >Sign Up / Login</a
+              >
+            </li>
+          </ul>
+          <div class="hamburger">
+            <i class="fas fa-bars"></i>
+          </div>
+        </nav>
+      </div>
+      </div>
+    </header>
+
+    <main class="container page-content">
+      <section class="search-and-filters">
+        <h2>Find Your Next Meal</h2>
+        <div class="search-bar-container">
+          <input
+            type="text"
+            id="recipeSearchInput"
+            placeholder="Search by name, ingredient, cuisine..."
+            class="search-input"
+          />
+          <button
+            class="btn-primary search-btn"
+            onclick="alert('Search functionality requires a backend!')"
+          >
+            Search
+          </button>
+        </div>
+
+        <div class="filter-section">
+          <h3>Filters</h3>
+          <div class="filter-group">
+            <h4>Categories</h4>
+            <label><input type="checkbox" /> Breakfast</label>
+            <label><input type="checkbox" /> Lunch</label>
+            <label><input type="checkbox" /> Dinner</label>
+            <label><input type="checkbox" /> Desserts</label>
+            <label><input type="checkbox" /> Appetizers</label>
+          </div>
+          <div class="filter-group">
+            <h4>Cuisine</h4>
+            <label><input type="checkbox" /> Indian</label>
+            <label><input type="checkbox" /> Italian</label>
+            <label><input type="checkbox" /> Mexican</label>
+            <label><input type="checkbox" /> Chinese</label>
+          </div>
+          <div class="filter-group">
+            <h4>Diet</h4>
+            <label><input type="checkbox" /> Vegetarian</label>
+            <label><input type="checkbox" /> Vegan</label>
+            <label><input type="checkbox" /> Gluten-Free</label>
+            <label><input type="checkbox" /> Keto</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="recipe-listings">
+        <h2>Browse Recipes</h2>
+        <div class="recipe-grid">
+          <p>Loading recipes...</p>
+        </div>
+      </section>
+
+      <section
+        id="recipe-detail"
+        class="single-recipe-view"
+        style="display: none"
+      >
+        <h2>Example Recipe Detail (Click "View Recipe" on any card)</h2>
+        <div class="recipe-detail-content">
+          <img
+            src="https://via.placeholder.com/600x400?text=Detailed+Recipe+Image"
+            alt="Detailed Recipe Image"
+          />
+          <h3>Spicy Chicken Curry</h3>
+          <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9734; (4.5/5)</div>
+          <p class="description">
+            A rich and flavorful Indian chicken curry, perfect with rice or
+            naan. This recipe uses fresh spices and tender chicken pieces for an
+            authentic taste.
+          </p>
+
+          <div class="recipe-meta">
+            <span><i class="fas fa-clock"></i> Prep: 20 min</span>
+            <span><i class="fas fa-hourglass-half"></i> Cook: 45 min</span>
+            <span><i class="fas fa-utensils"></i> Servings: 4</span>
+            <span><i class="fas fa-fire"></i> Calories: 450</span>
+          </div>
+
+          <h4>Ingredients:</h4>
+          <ul>
+            <li>
+              1 lb boneless, skinless chicken thighs, cut into 1-inch pieces
+            </li>
+            <li>1 large onion, chopped</li>
+            <li>2 tomatoes, pureed</li>
+            <li>2 cloves garlic, minced</li>
+            <li>1 inch ginger, grated</li>
+            <li>1 tbsp garam masala</li>
+            <li>1 tsp turmeric powder</li>
+            <li>1 tsp red chili powder (adjust to taste)</li>
+            <li>1/2 cup plain yogurt</li>
+            <li>Salt to taste</li>
+            <li>Fresh cilantro for garnish</li>
+          </ul>
+
+          <h4>Instructions:</h4>
+          <ol>
+            <li>
+              Heat oil in a large pot or Dutch oven over medium heat. Add
+              chopped onions and sauté until golden brown.
+            </li>
+            <li>
+              Add minced garlic and grated ginger, cook for 1 minute until
+              fragrant.
+            </li>
+            <li>
+              Stir in turmeric powder, red chili powder, and garam masala. Cook
+              for 30 seconds, stirring constantly.
+            </li>
+            <li>
+              Add pureed tomatoes and cook, stirring occasionally, until the oil
+              separates from the mixture (about 5-7 minutes).
+            </li>
+            <li>
+              Add chicken pieces and salt. Cook until chicken is lightly browned
+              on all sides.
+            </li>
+            <li>
+              Reduce heat to low. Stir in the plain yogurt gradually, ensuring
+              it doesn't curdle.
+            </li>
+            <li>
+              Add 1/2 cup of water (or more for a thinner gravy). Bring to a
+              simmer, then cover and cook for 20-25 minutes, or until chicken is
+              cooked through and tender.
+            </li>
+            <li>Garnish with fresh cilantro before serving.</li>
+          </ol>
+
+          <div class="recipe-actions">
+            <button class="btn-primary">
+              <i class="fas fa-bookmark"></i> Save to Recipe Box
+            </button>
+            <button class="btn-primary">
+              <i class="fas fa-calendar-alt"></i> Add to Meal Planner
+            </button>
+            <button class="btn-primary">
+              <i class="fas fa-shopping-basket"></i> Add to Shopping List
+            </button>
+            <button
+              class="btn-secondary"
+              onclick="alert('Entering Cook Mode... (Full-screen display with large font)')"
+            >
+              <i class="fas fa-utensil-spoon"></i> Cook Mode
+            </button>
+          </div>
+
+          <h4>Nutrition Information (Approximate per serving):</h4>
+          <ul>
+            <li>Calories: 450 kcal</li>
+            <li>Protein: 40g</li>
+            <li>Carbohydrates: 25g</li>
+            <li>Fat: 20g</li>
+          </ul>
+
+          <div class="community-discussion">
+            <h4>Reviews & Discussions</h4>
+            <div class="review-form">
+              <h5>Leave a Review:</h5>
+              <div class="star-rating-input">
+                <i class="far fa-star" data-value="1"></i>
+                <i class="far fa-star" data-value="2"></i>
+                <i class="far fa-star" data-value="3"></i>
+                <i class="far fa-star" data-value="4"></i>
+                <i class="far fa-star" data-value="5"></i>
+              </div>
+              <textarea
+                placeholder="Share your tips, modifications, or thoughts..."
+                rows="4"
+              ></textarea>
+              <button
+                class="btn-primary"
+                onclick="alert('Review submitted! (Requires backend)')"
+              >
+                Submit Review
+              </button>
+            </div>
+            <div class="user-reviews">
+              <h5>User Reviews:</h5>
+              <div class="review-item">
+                <p>
+                  <strong>Jane Doe</strong>
+                  <span class="rating"
+                    >&#9733;&#9733;&#9733;&#9733;&#9733;</span
+                  >
+                </p>
+                <p>
+                  "Absolutely delicious! I added a touch of coconut milk for
+                  extra creaminess. A new family favorite!"
+                </p>
+              </div>
+              <div class="review-item">
+                <p>
+                  <strong>John Smith</strong>
+                  <span class="rating"
+                    >&#9733;&#9733;&#9733;&#9733;&#9734;</span
+                  >
+                </p>
+                <p>
+                  "Great recipe, though I found it a bit too spicy for my taste.
+                  Will reduce chili powder next time."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-share">
+            <h4>Share this Recipe:</h4>
+            <a
+              href="#"
+              class="share-btn whatsapp"
+              onclick="alert('Share to WhatsApp (Requires specific sharing URLs)')"
+              ><i class="fab fa-whatsapp"></i> WhatsApp</a
+            >
+            <a
+              href="#"
+              class="share-btn instagram"
+              onclick="alert('Share to Instagram (Requires specific sharing URLs)')"
+              ><i class="fab fa-instagram"></i> Instagram</a
+            >
+            <a
+              href="#"
+              class="share-btn facebook"
+              onclick="alert('Share to Facebook (Requires specific sharing URLs)')"
+              ><i class="fab fa-facebook-f"></i> Facebook</a
+            >
+            <a
+              href="#"
+              class="share-btn pinterest"
+              onclick="alert('Share to Pinterest (Requires specific sharing URLs)')"
+              ><i class="fab fa-pinterest"></i> Pinterest</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 MYKittech. All rights reserved.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+  </body>
+</html>

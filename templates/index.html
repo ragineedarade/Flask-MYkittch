@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyKittch - Discover Recipes</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #fff;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 10;
+      }
+
+      .logo {
+        font-size: 26px;
+        font-weight: bold;
+        color: #4caf50;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+      }
+
+      .signup-btn {
+        padding: 8px 16px;
+        background-color: #4caf50;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-left: 20px;
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        margin-left: 20px;
+        cursor: pointer;
+      }
+
+      .hamburger span {
+        height: 3px;
+        width: 25px;
+        background: #333;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 65px;
+          right: 30px;
+          background-color: #fff;
+          padding: 20px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+          border-radius: 10px;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .hamburger {
+          display: flex;
+        }
+
+        .signup-btn {
+          margin-left: 0;
+        }
+      }
+
+      .hero {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        background: #f3fff4;
+      }
+
+      .hero-text {
+        max-width: 600px;
+        padding: 20px;
+      }
+
+      .hero-text h1 {
+        font-size: 48px;
+        color: #2e7d32;
+      }
+
+      .hero-text p {
+        font-size: 18px;
+        color: #555;
+        margin: 15px 0;
+      }
+
+      .hero-image {
+        max-width: 500px;
+        padding: 20px;
+      }
+
+      .hero-image img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .search-bar {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .search-bar input {
+        width: 80%;
+        max-width: 500px;
+        padding: 12px;
+        border: 2px solid #4caf50;
+        border-radius: 25px;
+        outline: none;
+      }
+
+      .section {
+        padding: 60px 30px;
+        text-align: center;
+      }
+
+      .section h2 {
+        font-size: 32px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .card {
+        background: #fff;
+        width: 280px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s;
+      }
+
+      .card:hover {
+        transform: scale(1.03);
+      }
+
+      .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .card-content {
+        padding: 15px;
+      }
+
+      .card-content h3 {
+        margin-bottom: 10px;
+        color: #4caf50;
+      }
+
+      .why-choose {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .why-box {
+        max-width: 250px;
+        text-align: left;
+      }
+
+      .why-box h4 {
+        color: #4caf50;
+        margin-bottom: 10px;
+      }
+
+      footer {
+        margin-top: 40px;
+        text-align: center;
+        padding: 20px;
+        font-size: 14px;
+        color: #888;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <div class="logo">
+        🍽️
+        <a
+          href="{{ url_for('index') }}"
+          style="text-decoration: none; color: black"
+          >MyKittchen</a
+        >
+      </div>
+      <nav>
+        <div class="nav-links" id="navLinks">
+          <!-- <a href="{{ url_for('recipes') }}">Recipes</a>
+          <a href="{{ url_for('submit_recipe') }}">Submit Recipe</a>
+          <a href="{{ url_for('meal_planner') }}">Meal-Planner</a> -->
+          <a href="{{ url_for('dashboard') }}">My-Account</a>
+          <a href="{{ url_for('login_signup') }}" class="signup-btn">Sign Up</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Cook. Share. Inspire.</h1>
+        <p>
+          Welcome to MyKittch — your personal recipe companion. Explore trending
+          meals, share your dishes, and enjoy the joy of cooking.
+        </p>
+        <div class="search-bar">
+          <input type="text" placeholder="Search delicious recipes..." />
+        </div>
+      </div>
+      <div class="hero-image">
+        <img
+          src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c"
+          alt="Healthy Food"
+        />
+      </div>
+    </section>
+
+    <!-- Trending Recipes -->
+    <section class="section">
+      <h2>🔥 Trending Recipes</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="https://source.unsplash.com/400x300/?pasta" alt="Pasta" />
+          <div class="card-content">
+            <h3>Garlic Cream Pasta</h3>
+            <p>Rich, creamy and full of flavor — the ultimate comfort dish.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://source.unsplash.com/400x300/?salad" alt="Salad" />
+          <div class="card-content">
+            <h3>Avocado Veggie Bowl</h3>
+            <p>Fresh, crunchy veggies paired with healthy fats and protein.</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="https://source.unsplash.com/400x300/?burger" alt="Burger" />
+          <div class="card-content">
+            <h3>Grilled Chicken Burger</h3>
+            <p>Juicy grilled chicken topped with spicy mayo and lettuce.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section" style="background-color: #f9f9f9">
+      <h2>Why Choose MyKittch?</h2>
+      <div class="why-choose">
+        <div class="why-box">
+          <h4>📷 Easy Sharing</h4>
+          <p>Upload recipes with images and descriptions in seconds.</p>
+        </div>
+        <div class="why-box">
+          <h4>💡 AI Meal Suggestions</h4>
+          <p>Get personalized meal plans based on your preferences.</p>
+        </div>
+        <div class="why-box">
+          <h4>🔐 Secure & Free</h4>
+          <p>Your data is safe, and your kitchen journey is free forever.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>&copy; 2025 MyKittch. Cook smart. Eat well.</footer>
+
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const navLinks = document.getElementById("navLinks");
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>
