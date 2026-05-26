@@ -1,143 +1,144 @@
-🍽️ MyKittchen AI
+# 🍽️ MyKittchen AI
 
-MyKittchen AI is an intelligent AI-powered meal planning and recipe assistant platform built using Flask.
-It helps users discover recipes, watch cooking videos, listen to recipes with voice control, download recipes as PDFs, analyze food nutrition using AI image recognition, and manage meal plans efficiently.
+<div align="center">
 
-The platform combines Flask, Gemini AI, Firebase, SQLite/MySQL, and modern frontend technologies to create a smart cooking experience.
+<img src="https://img.icons8.com/color/96/restaurant.png" width="120"/>
 
-✨ Key Features
-🔐 Authentication System
-User Signup & Login
-Firebase Authentication
-Secure Session Handling
-Google Login Integration
-🍛 Smart Recipe Management
+### 🚀 AI Powered Smart Cooking & Nutrition Platform
 
-✅ Submit Recipes
-✅ Upload Recipe Images
-✅ Search Recipes
-✅ Filter Recipes by:
+<p align="center">
+  <img src="https://img.shields.io/badge/Flask-Python-blue?style=for-the-badge&logo=flask">
+  <img src="https://img.shields.io/badge/Gemini-AI-orange?style=for-the-badge&logo=google">
+  <img src="https://img.shields.io/badge/Firebase-Backend-yellow?style=for-the-badge&logo=firebase">
+  <img src="https://img.shields.io/badge/Bootstrap-Frontend-purple?style=for-the-badge&logo=bootstrap">
+</p>
 
-Cuisine
-Diet
-Category
+</div>
 
-✅ Community Recipe Sharing
+---
 
-🤖 AI Nutrition Analyzer (NEW)
+# ✨ About The Project
 
-Upload a food image and AI will automatically detect:
+**MyKittchen AI** is an intelligent AI-powered cooking assistant and meal planning platform developed using **Flask** and **Gemini AI**.
 
-Calories
-Protein
-Carbohydrates
-Fiber
-Fats
-Vitamins
-Food Quantity
-Food Name
+The platform helps users:
 
-Powered by:
+✅ Discover Recipes  
+✅ Watch Cooking Videos  
+✅ Listen to Recipes with Voice Commands  
+✅ Download Recipes as PDF  
+✅ Analyze Food Nutrition from Images  
+✅ Plan Meals Smartly  
+✅ Upload & Share Recipes  
 
-Gemini AI Vision Model
-🎤 AI Voice Recipe Reader (NEW)
+---
+
+# 🔥 Features
+
+## 🍛 Smart Recipe System
+
+- Add Recipes
+- View Recipes
+- Search Recipes
+- Filter Recipes
+- Upload Recipe Images
+- Community Recipe Sharing
+
+---
+
+## 🤖 AI Nutrition Analyzer
+
+Upload food images and AI will detect:
+
+- 🍞 Calories
+- 🥩 Protein
+- 🍚 Carbohydrates
+- 🧈 Fats
+- 🌾 Fiber
+- 💊 Vitamins
+- ⚖️ Estimated Quantity
+
+Powered by **Gemini AI Vision**
+
+---
+
+## 🎤 AI Voice Recipe Reader
+
+Smart voice-enabled cooking assistant:
+
+### Supported Commands
+
+| Command | Action |
+|---|---|
+| `stop` | Pause Recipe |
+| `start` | Resume Recipe |
+| `resume` | Continue Reading |
+
+---
+
+## 📺 Automatic YouTube Recipe Videos
+
+- Auto searches recipe videos
+- Displays cooking tutorials
+- Embedded YouTube player
+
+---
+
+## 📄 Recipe PDF Download
 
 Users can:
+- Download recipes
+- Save recipes offline
+- Print recipe instructions
 
-Listen to recipes
-Pause recipe using voice command
-Resume recipe using voice command
-Supported Commands
-“Stop”
-“Start”
-“Resume”
+---
 
-Built using:
+## 📅 Smart Meal Planner
 
-Speech Synthesis API
-Speech Recognition API
-📺 YouTube Recipe Video Integration (NEW)
+- Organize meals
+- Daily meal tracking
+- Recipe scheduling
 
-Automatically searches and displays:
+---
 
-Recipe tutorial videos
-Cooking instructions
-Related recipe content
+# 🧠 AI Features
 
-Integrated with:
+| Feature | Technology |
+|---|---|
+| Nutrition Detection | Gemini AI |
+| Food Recognition | Gemini Vision |
+| Voice Commands | Web Speech API |
+| AI Cooking Assistant | Speech Synthesis |
+| Video Search | YouTube Embed |
+| PDF Export | JavaScript |
 
-YouTube Search & Embed
-📄 Recipe PDF Download (NEW)
+---
 
-Users can:
+# 🛠️ Tech Stack
 
-Download recipes as PDF
-Print recipes
-Save recipes offline
-📅 Meal Planning System
+| Technology | Usage |
+|---|---|
+| Flask | Backend |
+| Python | Core Logic |
+| HTML/CSS/JS | Frontend |
+| Bootstrap | UI Design |
+| Firebase | Authentication & Storage |
+| SQLite/MySQL | Database |
+| Gemini AI | AI Analysis |
+| Speech API | Voice Features |
 
-Users can:
+---
 
-Plan meals
-Save meal schedules
-Organize daily recipes
+# 📂 Project Structure
 
-Meal plans stored in:
-
-MySQL Database
-📸 Image Upload System
-Upload food images
-Upload recipe thumbnails
-Firebase Storage Integration
-Local Upload Support
-🔍 Search & Filtering
-
-Search recipes by:
-
-Recipe Name
-Ingredients
-Keywords
-
-Advanced filtering:
-
-Cuisine
-Diet Type
-Recipe Category
-🛡️ Security Features
-
-✅ Environment Variables (.env)
-✅ API Key Protection
-✅ Secure Authentication
-✅ Session Management
-
-🧠 AI Features Included
-Feature	Technology
-Nutrition Detection	Gemini AI
-Food Image Analysis	Gemini Vision
-Voice Commands	Web Speech API
-Recipe Audio Reading	Speech Synthesis
-YouTube Video Search	YouTube Embed
-PDF Generation	JavaScript Print API
-🛠️ Tech Stack
-Layer	Technologies Used
-Frontend	HTML, CSS, JavaScript, Bootstrap
-Backend	Python, Flask
-Database	SQLite, MySQL, Firebase Firestore
-AI	Gemini AI
-Authentication	Firebase Auth
-Storage	Firebase Storage
-ORM	Flask SQLAlchemy
-APIs	YouTube API, Gemini API
-Voice Features	Speech Recognition API
-PDF Export	JavaScript Print API
-📂 Folder Structure
+```bash
 MyKittchen/
 │
 ├── static/
 │   ├── css/
 │   ├── js/
-│   ├── images/
 │   ├── uploads/
+│   ├── images/
 │   └── recipe_pdfs/
 │
 ├── templates/
@@ -145,60 +146,69 @@ MyKittchen/
 │   ├── recipes.html
 │   ├── nutrition.html
 │   ├── nutrition_result.html
-│   ├── login.html
-│   ├── dashboard.html
-│   └── submit_recipe.html
+│   └── login.html
 │
 ├── app.py
-├── users.db
-├── recipes.db
 ├── requirements.txt
+├── users.db
 ├── .env
 └── README.md
-⚙️ Installation & Setup
-📦 Prerequisites
-Python 3.x
-pip
-Firebase Project
-Gemini API Key
-MySQL Server
-🔧 Clone Repository
+```
+
+---
+
+# ⚙️ Installation
+
+## 🔹 Clone Repository
+
+```bash
 git clone https://github.com/ragineedarade/flask-mykittchen-project.git
 
 cd flask-mykittchen-project
-🧪 Create Virtual Environment
-Windows
+```
+
+---
+
+## 🔹 Create Virtual Environment
+
+### Windows
+
+```bash
 python -m venv venv
 
 venv\Scripts\activate
-Mac/Linux
+```
+
+### Linux / Mac
+
+```bash
 python3 -m venv venv
 
 source venv/bin/activate
-📥 Install Dependencies
+```
+
+---
+
+## 🔹 Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
 OR
 
-pip install flask flask_sqlalchemy pillow requests werkzeug firebase-admin google-genai
-📁 Create Upload Folder
+```bash
+pip install flask firebase-admin pillow google-genai flask_sqlalchemy
+```
 
-Inside static folder create:
+---
 
-static/uploads
-🔑 Gemini AI Setup
+# 🔑 Environment Variables
 
-Get API key from:
+Create `.env`
 
-Google AI Studio
-
-🔐 Environment Variables
-
-Create .env
-
+```env
 SECRET_KEY=your_secret_key
-
-FIREBASE_API_KEY=your_firebase_key
 
 MYSQL_USER=root
 
@@ -207,46 +217,99 @@ MYSQL_PASSWORD=your_password
 MYSQL_DB=mykittchen
 
 GEMINI_API_KEY=your_gemini_api_key
-▶️ Run Application
+
+FIREBASE_API_KEY=your_firebase_key
+```
+
+---
+
+# 🤖 Gemini AI Setup
+
+Get API Key from:
+
+👉 https://aistudio.google.com/app/apikey
+
+---
+
+# ▶️ Run Project
+
+```bash
 python app.py
+```
 
 Visit:
 
+```bash
 http://127.0.0.1:5000
-📸 Screenshots
-Home Page
+```
+
+---
+
+# 📸 Screenshots
+
+## 🏠 Home Page
+
+```markdown
 ![Home](screenshots/home.png)
-Recipe Page
+```
+
+---
+
+## 🍛 Recipe Page
+
+```markdown
 ![Recipes](screenshots/recipes.png)
-Nutrition Analyzer
+```
+
+---
+
+## 🤖 Nutrition Analyzer
+
+```markdown
 ![Nutrition](screenshots/nutrition.png)
-AI Recipe Reader
-![Voice Assistant](screenshots/voice.png)
-🚀 Future Improvements
-AI Recipe Recommendation
-AI Meal Planner
-Daily Calorie Tracker
-BMI Calculator
-AI Diet Recommendation
-AI Chatbot Cooking Assistant
-Multi-language Voice Support
-Dark Mode
-Mobile App Version
-👩‍💻 Developed By
-Raginee Darade
-Python Developer
-AI Enthusiast
-Full Stack Developer
-Flask & AI Integration Developer
+```
 
-GitHub:
-Raginee Darade GitHub
+---
 
-⭐ Support
+# 🚀 Upcoming Features
+
+- 🧠 AI Meal Recommendation
+- 📱 Mobile Application
+- 🌍 Multi-language Support
+- 🌙 Dark Mode
+- 🥗 Daily Calorie Tracker
+- 🤖 AI Chatbot Assistant
+
+---
+
+# 👩‍💻 Developer
+
+<div align="center">
+
+## Raginee Darade
+
+### 🚀 AI & Full Stack Developer
+
+<a href="https://github.com/ragineedarade">
+<img src="https://img.shields.io/badge/GitHub-Profile-black?style=for-the-badge&logo=github">
+</a>
+
+</div>
+
+---
+
+# ⭐ Support
 
 If you like this project:
 
-⭐ Star the repository
-🍴 Fork the repository
-🧠 Contribute new features
-🚀 Share with others
+⭐ Star the Repository  
+🍴 Fork the Project  
+🚀 Share with Others  
+
+---
+
+<div align="center">
+
+# 💖 Thank You For Visiting MyKittchen AI
+
+</div>
