@@ -1,19 +1,281 @@
-<!DOCTYPE html>
+ <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recipes - MYKittech</title>
-    <link rel="stylesheet" href="/static/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style1.css') }}"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+
+    <style>
+      /* Global Styles */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f9f9f9;
+        color: #333;
+        margin: 0;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px;
+      }
+
+      h2 {
+        color: #ff6347;
+        margin-bottom: 20px;
+      }
+
+      /* Recipe Grid */
+      .recipe-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      /* Recipe Card */
+      .recipe-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .recipe-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .recipe-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .recipe-card-content {
+        padding: 15px;
+      }
+
+      .recipe-card-content h3 {
+        margin: 0 0 10px 0;
+        color: #333;
+        font-size: 1.2em;
+      }
+
+      /* Tags */
+      .recipe-tags {
+        margin: 5px 0 10px 0;
+      }
+
+      .recipe-tags .tag {
+        display: inline-block;
+        background: #eee;
+        color: #555;
+        font-size: 12px;
+        padding: 3px 8px;
+        border-radius: 6px;
+        margin-right: 5px;
+      }
+
+      /* Buttons */
+      .btn-small {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 10px;
+        margin: 5px 3px 0 0;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s ease;
+        color: white;
+      }
+
+      .btn-recipe {
+        background: #ff7f50;
+      }
+      .btn-recipe:hover {
+        background: #ff6347;
+      }
+
+      .btn-listen {
+        background: #4caf50;
+      }
+      .btn-listen:hover {
+        background: #45a049;
+      }
+
+      .btn-video {
+        background: #1e90ff;
+      }
+      .btn-video:hover {
+        background: #1c86ee;
+      }
+
+      .btn-small i {
+        margin-right: 5px;
+      }
+
+      /* Fullscreen Modal */
+      #videoModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #videoModalContent {
+        position: relative;
+        width: 90%;
+        max-width: 900px;
+        max-height: 90%;
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #videoModalClose {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 28px;
+        color: white;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 5px 10px;
+        border-radius: 50%;
+        z-index: 10000;
+      }
+
+      #videoTitle {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      #player {
+        width: 100%;
+        height: 400px;
+        background: black;
+        margin-bottom: 15px;
+      }
+
+      #recipeModalText h3 {
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+
+      /* Footer */
+      footer {
+        background: #222;
+        color: #fff;
+        padding: 50px 0 20px;
+      }
+
+      .footer-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px;
+      }
+
+      .footer-container h2,
+      .footer-container h3 {
+        color: #ff6347;
+        margin-bottom: 15px;
+      }
+
+      .footer-container p,
+      .footer-container a {
+        color: #ccc;
+        font-size: 14px;
+        text-decoration: none;
+      }
+
+      .footer-container a:hover {
+        color: #ff6347;
+      }
+
+      .footer-bottom {
+        margin-top: 40px;
+        text-align: center;
+        border-top: 1px solid #444;
+        padding-top: 20px;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .social-links a {
+        color: #ccc;
+        margin: 0 8px;
+        font-size: 18px;
+        transition: color 0.3s;
+      }
+
+      .social-links a:hover {
+        color: #ff6347;
+      }
+
+      .footer-newsletter form {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .footer-newsletter input[type="email"] {
+        flex: 1;
+        padding: 8px 10px;
+        border-radius: 5px;
+        border: none;
+      }
+
+      .footer-newsletter button {
+        background: #ff6347;
+        border: none;
+        padding: 8px 12px;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .footer-newsletter button:hover {
+        background: #ff4500;
+      }
+    </style>
   </head>
+
   <body>
+    <!-- Header -->
     <header>
       <div class="container">
-         <div class="logo">
+        <div class="logo">
           <h1><a href="{{ url_for('main') }}">MYKittech</a></h1>
         </div>
         <nav>
@@ -28,254 +290,230 @@
               >
             </li>
           </ul>
-          <div class="hamburger">
-            <i class="fas fa-bars"></i>
-          </div>
+          <div class="hamburger"><i class="fas fa-bars"></i></div>
         </nav>
-      </div>
       </div>
     </header>
 
     <main class="container page-content">
+      <!-- Filters + Search -->
       <section class="search-and-filters">
         <h2>Find Your Next Meal</h2>
-        <div class="search-bar-container">
-          <input
-            type="text"
-            id="recipeSearchInput"
-            placeholder="Search by name, ingredient, cuisine..."
-            class="search-input"
-          />
-          <button
-            class="btn-primary search-btn"
-            onclick="alert('Search functionality requires a backend!')"
-          >
-            Search
-          </button>
-        </div>
-
-        <div class="filter-section">
-          <h3>Filters</h3>
-          <div class="filter-group">
-            <h4>Categories</h4>
-            <label><input type="checkbox" /> Breakfast</label>
-            <label><input type="checkbox" /> Lunch</label>
-            <label><input type="checkbox" /> Dinner</label>
-            <label><input type="checkbox" /> Desserts</label>
-            <label><input type="checkbox" /> Appetizers</label>
+        <form
+          id="filterSearchForm"
+          action="{{ url_for('recipes') }}"
+          method="GET"
+        >
+          <div class="search-bar-container">
+            <input
+              type="text"
+              id="recipeSearchInput"
+              name="search_query"
+              placeholder="Search by title, ingredient..."
+              class="search-input"
+              value="{{ search_query if search_query else '' }}"
+            />
+            <button type="submit" class="btn-primary search-btn">Search</button>
           </div>
-          <div class="filter-group">
-            <h4>Cuisine</h4>
-            <label><input type="checkbox" /> Indian</label>
-            <label><input type="checkbox" /> Italian</label>
-            <label><input type="checkbox" /> Mexican</label>
-            <label><input type="checkbox" /> Chinese</label>
+          <div class="filter-section">
+            <h3>Filters</h3>
+            <div class="filter-group">
+              <h4>Categories</h4>
+              {% for cat in
+              ['Breakfast','Lunch','Dinner','Desserts','Appetizers','Snacks','Soups']
+              %}
+              <label>
+                <input
+                  type="checkbox"
+                  name="category"
+                  value="{{ cat }}"
+                  {%
+                  if
+                  cat
+                  in
+                  selected_categories
+                  %}checked{%
+                  endif
+                  %}
+                />
+                {{ cat }}
+              </label>
+              {% endfor %}
+            </div>
+            <div class="filter-group">
+              <h4>Cuisine</h4>
+              {% for cui in
+              ['Indian','Italian','Mexican','Chinese','American','French','Japanese']
+              %}
+              <label>
+                <input
+                  type="checkbox"
+                  name="cuisine"
+                  value="{{ cui }}"
+                  {%
+                  if
+                  cui
+                  in
+                  selected_cuisine
+                  %}checked{%
+                  endif
+                  %}
+                />
+                {{ cui }}
+              </label>
+              {% endfor %}
+            </div>
+            <div class="filter-group">
+              <h4>Diet</h4>
+              {% for d in
+              ['Vegetarian','Vegan','Gluten-Free','Keto','Dairy-Free'] %}
+              <label>
+                <input
+                  type="checkbox"
+                  name="diet"
+                  value="{{ d }}"
+                  {%
+                  if
+                  d
+                  in
+                  selected_diet
+                  %}checked{%
+                  endif
+                  %}
+                />
+                {{ d }}
+              </label>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn-primary">Apply Filters</button>
+            <a href="{{ url_for('recipes') }}" class="btn-secondary"
+              >Clear All</a
+            >
           </div>
-          <div class="filter-group">
-            <h4>Diet</h4>
-            <label><input type="checkbox" /> Vegetarian</label>
-            <label><input type="checkbox" /> Vegan</label>
-            <label><input type="checkbox" /> Gluten-Free</label>
-            <label><input type="checkbox" /> Keto</label>
-          </div>
-        </div>
+        </form>
       </section>
 
+      <!-- Recipe List -->
       <section class="recipe-listings">
         <h2>Browse Recipes</h2>
         <div class="recipe-grid">
-          <p>Loading recipes...</p>
-        </div>
-      </section>
+          {% if recipes %} {% for recipe in recipes %}
+          <div class="recipe-card">
+            <img
+              src="{{ recipe.image_url or url_for('static', filename='images/default_recipe.jpg') }}"
+              alt="{{ recipe.title }}"
+              onerror="this.src='{{ url_for('static', filename='images/default_recipe.jpg') }}';"
+            />
+            <div class="recipe-card-content">
+              <h3>{{ recipe.title }}</h3>
+              {% if recipe.category or recipe.cuisine or recipe.diet %}
+              <p class="recipe-tags">
+                {% if recipe.category %}<span class="tag"
+                  >Category: {{ recipe.category }}</span
+                >{% endif %} {% if recipe.cuisine %}<span class="tag"
+                  >Cuisine: {{ recipe.cuisine }}</span
+                >{% endif %} {% if recipe.diet %}<span class="tag"
+                  >Diet: {{ recipe.diet }}</span
+                >{% endif %}
+              </p>
+              {% endif %}
+              <p class="recipe-preview">
+                <strong>Ingredients:</strong> {{ recipe.ingredients |
+                truncate(100) }}
+              </p>
+              <p class="recipe-preview">
+                <strong>Instructions:</strong> {{ recipe.instructions |
+                truncate(100) }}
+              </p>
 
-      <section
-        id="recipe-detail"
-        class="single-recipe-view"
-        style="display: none"
-      >
-        <h2>Example Recipe Detail (Click "View Recipe" on any card)</h2>
-        <div class="recipe-detail-content">
-          <img
-            src="https://via.placeholder.com/600x400?text=Detailed+Recipe+Image"
-            alt="Detailed Recipe Image"
-          />
-          <h3>Spicy Chicken Curry</h3>
-          <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9734; (4.5/5)</div>
-          <p class="description">
-            A rich and flavorful Indian chicken curry, perfect with rice or
-            naan. This recipe uses fresh spices and tender chicken pieces for an
-            authentic taste.
-          </p>
-
-          <div class="recipe-meta">
-            <span><i class="fas fa-clock"></i> Prep: 20 min</span>
-            <span><i class="fas fa-hourglass-half"></i> Cook: 45 min</span>
-            <span><i class="fas fa-utensils"></i> Servings: 4</span>
-            <span><i class="fas fa-fire"></i> Calories: 450</span>
-          </div>
-
-          <h4>Ingredients:</h4>
-          <ul>
-            <li>
-              1 lb boneless, skinless chicken thighs, cut into 1-inch pieces
-            </li>
-            <li>1 large onion, chopped</li>
-            <li>2 tomatoes, pureed</li>
-            <li>2 cloves garlic, minced</li>
-            <li>1 inch ginger, grated</li>
-            <li>1 tbsp garam masala</li>
-            <li>1 tsp turmeric powder</li>
-            <li>1 tsp red chili powder (adjust to taste)</li>
-            <li>1/2 cup plain yogurt</li>
-            <li>Salt to taste</li>
-            <li>Fresh cilantro for garnish</li>
-          </ul>
-
-          <h4>Instructions:</h4>
-          <ol>
-            <li>
-              Heat oil in a large pot or Dutch oven over medium heat. Add
-              chopped onions and sauté until golden brown.
-            </li>
-            <li>
-              Add minced garlic and grated ginger, cook for 1 minute until
-              fragrant.
-            </li>
-            <li>
-              Stir in turmeric powder, red chili powder, and garam masala. Cook
-              for 30 seconds, stirring constantly.
-            </li>
-            <li>
-              Add pureed tomatoes and cook, stirring occasionally, until the oil
-              separates from the mixture (about 5-7 minutes).
-            </li>
-            <li>
-              Add chicken pieces and salt. Cook until chicken is lightly browned
-              on all sides.
-            </li>
-            <li>
-              Reduce heat to low. Stir in the plain yogurt gradually, ensuring
-              it doesn't curdle.
-            </li>
-            <li>
-              Add 1/2 cup of water (or more for a thinner gravy). Bring to a
-              simmer, then cover and cook for 20-25 minutes, or until chicken is
-              cooked through and tender.
-            </li>
-            <li>Garnish with fresh cilantro before serving.</li>
-          </ol>
-
-          <div class="recipe-actions">
-            <button class="btn-primary">
-              <i class="fas fa-bookmark"></i> Save to Recipe Box
-            </button>
-            <button class="btn-primary">
-              <i class="fas fa-calendar-alt"></i> Add to Meal Planner
-            </button>
-            <button class="btn-primary">
-              <i class="fas fa-shopping-basket"></i> Add to Shopping List
-            </button>
-            <button
-              class="btn-secondary"
-              onclick="alert('Entering Cook Mode... (Full-screen display with large font)')"
-            >
-              <i class="fas fa-utensil-spoon"></i> Cook Mode
-            </button>
-          </div>
-
-          <h4>Nutrition Information (Approximate per serving):</h4>
-          <ul>
-            <li>Calories: 450 kcal</li>
-            <li>Protein: 40g</li>
-            <li>Carbohydrates: 25g</li>
-            <li>Fat: 20g</li>
-          </ul>
-
-          <div class="community-discussion">
-            <h4>Reviews & Discussions</h4>
-            <div class="review-form">
-              <h5>Leave a Review:</h5>
-              <div class="star-rating-input">
-                <i class="far fa-star" data-value="1"></i>
-                <i class="far fa-star" data-value="2"></i>
-                <i class="far fa-star" data-value="3"></i>
-                <i class="far fa-star" data-value="4"></i>
-                <i class="far fa-star" data-value="5"></i>
-              </div>
-              <textarea
-                placeholder="Share your tips, modifications, or thoughts..."
-                rows="4"
-              ></textarea>
               <button
-                class="btn-primary"
-                onclick="alert('Review submitted! (Requires backend)')"
+                class="btn-small btn-recipe"
+                onclick="showRecipeModalText('{{ recipe.title }}', `{{ recipe.ingredients | escape }}`, `{{ recipe.instructions | escape }}`)"
               >
-                Submit Review
+                <i class="fas fa-book"></i> View Recipe
+              </button>
+              <button
+                class="btn-small btn-listen"
+                onclick="toggleSpeech(this, '{{ recipe.title }}', `{{ recipe.ingredients | escape }}`, `{{ recipe.instructions | escape }}`)"
+              >
+                <i class="fas fa-volume-up"></i> Listen
+              </button>
+              <button
+                class="btn-small btn-video"
+                onclick="showRecipeModalVideo('{{ recipe.title }}', '{{ recipe.video_url }}')"
+              >
+                <i class="fas fa-play-circle"></i> View Video
               </button>
             </div>
-            <div class="user-reviews">
-              <h5>User Reviews:</h5>
-              <div class="review-item">
-                <p>
-                  <strong>Jane Doe</strong>
-                  <span class="rating"
-                    >&#9733;&#9733;&#9733;&#9733;&#9733;</span
-                  >
-                </p>
-                <p>
-                  "Absolutely delicious! I added a touch of coconut milk for
-                  extra creaminess. A new family favorite!"
-                </p>
-              </div>
-              <div class="review-item">
-                <p>
-                  <strong>John Smith</strong>
-                  <span class="rating"
-                    >&#9733;&#9733;&#9733;&#9733;&#9734;</span
-                  >
-                </p>
-                <p>
-                  "Great recipe, though I found it a bit too spicy for my taste.
-                  Will reduce chili powder next time."
-                </p>
-              </div>
-            </div>
           </div>
-
-          <div class="social-share">
-            <h4>Share this Recipe:</h4>
-            <a
-              href="#"
-              class="share-btn whatsapp"
-              onclick="alert('Share to WhatsApp (Requires specific sharing URLs)')"
-              ><i class="fab fa-whatsapp"></i> WhatsApp</a
-            >
-            <a
-              href="#"
-              class="share-btn instagram"
-              onclick="alert('Share to Instagram (Requires specific sharing URLs)')"
-              ><i class="fab fa-instagram"></i> Instagram</a
-            >
-            <a
-              href="#"
-              class="share-btn facebook"
-              onclick="alert('Share to Facebook (Requires specific sharing URLs)')"
-              ><i class="fab fa-facebook-f"></i> Facebook</a
-            >
-            <a
-              href="#"
-              class="share-btn pinterest"
-              onclick="alert('Share to Pinterest (Requires specific sharing URLs)')"
-              ><i class="fab fa-pinterest"></i> Pinterest</a
-            >
-          </div>
+          {% endfor %} {% else %}
+          <p>
+            No recipes found. Be the first to
+            <a href="{{ url_for('submit_recipe') }}">submit one</a>!
+          </p>
+          {% endif %}
         </div>
       </section>
     </main>
 
+    <!-- Fullscreen Modal -->
+    <div id="videoModal">
+      <div id="videoModalContent">
+        <span id="videoModalClose" onclick="closeVideo()">✖</span>
+        <div id="videoTitle"></div>
+        <div id="player"></div>
+        <div id="recipeModalText"></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
     <footer>
-      <div class="container">
-        <p>&copy; 2025 MYKittech. All rights reserved.</p>
+      <div class="footer-container">
+        <div class="footer-branding">
+          <h2>MyKittchen</h2>
+          <p>
+            Unleash your inner chef with delicious recipes, smart kitchen hacks,
+            and inspiring culinary journeys.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">Our Recipes</a></li>
+            <li><a href="#">About MyKittchen</a></li>
+            <li><a href="#">Blog & Tips</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-categories">
+          <h3>Recipe Categories</h3>
+          <ul>
+            <li><a href="#">Breakfast & Brunch</a></li>
+            <li><a href="#">Main Courses</a></li>
+            <li><a href="#">Sweet Treats</a></li>
+            <li><a href="#">Healthy & Quick</a></li>
+            <li><a href="#">International Flavors</a></li>
+          </ul>
+        </div>
+        <div class="footer-newsletter">
+          <h3>Stay Connected</h3>
+          <p>
+            Join our newsletter for fresh recipes, exclusive content, and
+            culinary secrets delivered to your inbox.
+          </p>
+          <form>
+            <input type="email" placeholder="Your Email Address" />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          © 2025 MyKittchen. All rights reserved. |
+          <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+        </p>
         <div class="social-links">
           <a href="#"><i class="fab fa-facebook-f"></i></a>
           <a href="#"><i class="fab fa-instagram"></i></a>
@@ -284,6 +522,363 @@
       </div>
     </footer>
 
-    <script src="/static/script.js"></script>
+    <script>
+      // ===============================
+      // Speech Synthesis
+      // ===============================
+
+      let synth = window.speechSynthesis;
+      let utterance;
+      let isPaused = false;
+      let currentButton = null;
+
+      function toggleSpeech(button, title, ingredients, instructions) {
+        const fullText = `
+      ${title}
+
+      Ingredients:
+      ${ingredients}
+
+      Instructions:
+      ${instructions}
+    `;
+
+        currentButton = button;
+
+        // If already speaking → stop
+        if (synth.speaking && !isPaused) {
+          synth.pause();
+          isPaused = true;
+
+          button.innerHTML = '<i class="fas fa-play"></i> Resume';
+
+          return;
+        }
+
+        // Resume if paused
+        if (isPaused) {
+          synth.resume();
+          isPaused = false;
+
+          button.innerHTML = '<i class="fas fa-pause"></i> Stop';
+
+          return;
+        }
+
+        // Start new speech
+        utterance = new SpeechSynthesisUtterance(fullText);
+
+        utterance.lang = "en-US";
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+
+        utterance.onend = () => {
+          isPaused = false;
+
+          if (currentButton) {
+            currentButton.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
+          }
+        };
+
+        synth.speak(utterance);
+
+        button.innerHTML = '<i class="fas fa-pause"></i> Stop';
+
+        // Start voice recognition AFTER click
+        startVoiceRecognition();
+      }
+
+      // ===============================
+      // Voice Recognition
+      // ===============================
+
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      let recognition;
+
+      function startVoiceRecognition() {
+        if (!SpeechRecognition) {
+          alert("Speech Recognition not supported in this browser");
+          return;
+        }
+
+        recognition = new SpeechRecognition();
+
+        recognition.continuous = true;
+        recognition.interimResults = false;
+        recognition.lang = "en-US";
+
+        recognition.onresult = function (event) {
+          const command = event.results[event.results.length - 1][0].transcript
+            .toLowerCase()
+            .trim();
+
+          console.log("Command:", command);
+
+          // STOP COMMAND
+          if (command.includes("stop")) {
+            if (synth.speaking) {
+              synth.pause();
+              isPaused = true;
+
+              if (currentButton) {
+                currentButton.innerHTML = '<i class="fas fa-play"></i> Resume';
+              }
+
+              console.log("Speech Paused");
+            }
+          }
+
+          // START / RESUME COMMAND
+          if (command.includes("start") || command.includes("resume")) {
+            if (isPaused) {
+              synth.resume();
+              isPaused = false;
+
+              if (currentButton) {
+                currentButton.innerHTML = '<i class="fas fa-pause"></i> Stop';
+              }
+
+              console.log("Speech Resumed");
+            }
+          }
+        };
+
+        // Restart recognition automatically
+        recognition.onend = () => {
+          recognition.start();
+        };
+
+        recognition.onerror = (event) => {
+          console.log("Recognition Error:", event.error);
+        };
+
+        recognition.start();
+      }
+
+      // ===============================
+      // YouTube API
+      // ===============================
+
+      let tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+
+      let player;
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          height: "100%",
+          width: "100%",
+          videoId: "",
+          playerVars: {
+            autoplay: 0,
+            controls: 1,
+          },
+        });
+      }
+
+      function extractVideoId(url) {
+        if (!url) return "";
+
+        let videoId = "";
+
+        try {
+          if (url.includes("youtu.be/")) {
+            videoId = url.split("youtu.be/")[1].split(/[?&]/)[0];
+          } else if (url.includes("youtube.com/watch")) {
+            videoId = new URL(url).searchParams.get("v");
+          } else if (url.includes("youtube.com/embed/")) {
+            videoId = url.split("embed/")[1].split(/[?&]/)[0];
+          }
+        } catch (e) {
+          console.error("Invalid YouTube URL:", e);
+        }
+
+        return videoId || "";
+      }
+
+      function showRecipeModalText(title, ingredients, instructions) {
+        document.getElementById("player").style.display = "none";
+
+        document.getElementById("videoTitle").textContent = title;
+
+        document.getElementById("recipeModalText").innerHTML = `
+      <h3>Ingredients:</h3>
+      <p>${ingredients}</p>
+
+      <h3>Instructions:</h3>
+      <p>${instructions}</p>
+    `;
+
+        document.getElementById("videoModal").style.display = "flex";
+      }
+
+      function showRecipeModalVideo(title, videoUrl) {
+        const videoId = extractVideoId(videoUrl);
+
+        document.getElementById("videoTitle").textContent = title;
+
+        if (videoId) {
+          document.getElementById("player").style.display = "block";
+
+          document.getElementById("recipeModalText").innerHTML = "";
+
+          if (player && player.loadVideoById) {
+            player.loadVideoById(videoId);
+          }
+        } else {
+          document.getElementById("player").style.display = "none";
+
+          document.getElementById("recipeModalText").innerHTML =
+            "<p>Video not available for this recipe.</p>";
+        }
+
+        document.getElementById("videoModal").style.display = "flex";
+      }
+
+      function closeVideo() {
+        document.getElementById("videoModal").style.display = "none";
+
+        if (player && player.stopVideo) {
+          player.stopVideo();
+        }
+
+        // Stop speech too
+        synth.cancel();
+
+        // Stop recognition
+        if (recognition) {
+          recognition.stop();
+        }
+
+        isPaused = false;
+      }
+      function showRecipeModalText(title, ingredients, instructions) {
+        document.getElementById("videoTitle").textContent = title;
+
+        document.getElementById("player").innerHTML = "";
+
+        document.getElementById("recipeModalText").innerHTML = `
+
+    <!-- DOWNLOAD BUTTON -->
+
+    <button
+      onclick="downloadRecipePDF(
+        '${title}',
+        \`${ingredients}\`,
+        \`${instructions}\`
+      )"
+      style="
+        background:#e74c3c;
+        color:white;
+        border:none;
+        padding:12px 18px;
+        border-radius:8px;
+        cursor:pointer;
+        margin-bottom:20px;
+        font-size:15px;
+        font-weight:bold;
+      "
+    >
+      <i class="fas fa-file-pdf"></i>
+      Download PDF
+    </button>
+
+    <h3>Ingredients:</h3>
+
+    <p>${ingredients}</p>
+
+    <br>
+
+    <h3>Instructions:</h3>
+
+    <p>${instructions}</p>
+
+  `;
+
+        document.getElementById("videoModal").style.display = "flex";
+      }
+
+      // ===============================
+      // DOWNLOAD CLEAN PDF
+      // ===============================
+
+      function downloadRecipePDF(title, ingredients, instructions) {
+        const pdfWindow = window.open("", "_blank");
+
+        pdfWindow.document.write(`
+
+    <!DOCTYPE html>
+
+    <html>
+
+    <head>
+
+      <title>${title}</title>
+
+      <style>
+
+        body {
+          font-family: Arial, sans-serif;
+          padding: 40px;
+          color: #333;
+          line-height: 1.8;
+        }
+
+        h1 {
+          color: #ff6347;
+          text-align: center;
+          margin-bottom: 30px;
+        }
+
+        h2 {
+          color: #444;
+          margin-top: 25px;
+        }
+
+        .section {
+          background: #f9f9f9;
+          padding: 20px;
+          border-radius: 10px;
+          margin-top: 10px;
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      <h1>${title}</h1>
+
+      <h2>Ingredients</h2>
+
+      <div class="section">
+        ${ingredients.replace(/\n/g, "<br>")}
+      </div>
+
+      <h2>Instructions</h2>
+
+      <div class="section">
+        ${instructions.replace(/\n/g, "<br>")}
+      </div>
+
+    </body>
+
+    </html>
+
+  `);
+
+        pdfWindow.document.close();
+
+        pdfWindow.focus();
+
+        setTimeout(() => {
+          pdfWindow.print();
+        }, 500);
+      }
+    </script>
   </body>
 </html>
