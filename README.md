@@ -1,144 +1,252 @@
-# 🍽️ MyKittchen
+🍽️ MyKittchen AI
 
-**MyKittchen** is a smart meal planning and recipe submission platform built using Flask. It helps users manage meals, explore community recipes, upload their own, and store data securely using Firebase and SQL databases. It supports authentication, cloud image uploads, and integrates multiple databases for flexibility.
+MyKittchen AI is an intelligent AI-powered meal planning and recipe assistant platform built using Flask.
+It helps users discover recipes, watch cooking videos, listen to recipes with voice control, download recipes as PDFs, analyze food nutrition using AI image recognition, and manage meal plans efficiently.
 
----
+The platform combines Flask, Gemini AI, Firebase, SQLite/MySQL, and modern frontend technologies to create a smart cooking experience.
 
-## ✨ Key Features
+✨ Key Features
+🔐 Authentication System
+User Signup & Login
+Firebase Authentication
+Secure Session Handling
+Google Login Integration
+🍛 Smart Recipe Management
 
-🔐 **Authentication**
-- Sign up and login using Firebase Authentication
-- Secure access and session management
+✅ Submit Recipes
+✅ Upload Recipe Images
+✅ Search Recipes
+✅ Filter Recipes by:
 
-📋 **Recipe Management**
-- Submit new recipes with title, ingredients, steps, and images
-- View recipes stored in Firebase Firestore
-- Search recipes by name or keyword
+Cuisine
+Diet
+Category
 
-🍛 **Meal Planning**
-- Users can plan meals by selecting recipes
-- Meal plans are stored and fetched from MySQL
+✅ Community Recipe Sharing
 
-📸 **Image Upload**
-- Upload recipe images to Firebase Storage
-- Display images in the recipe view
+🤖 AI Nutrition Analyzer (NEW)
 
-🛡️ **Secure Secret Handling**
-- Uses `.env` file to manage secrets and API keys
-- No hardcoded secrets
+Upload a food image and AI will automatically detect:
 
-🔍 **Search & Filter**
-- Search recipes by title
-- Filter recipes (optional feature to be extended)
+Calories
+Protein
+Carbohydrates
+Fiber
+Fats
+Vitamins
+Food Quantity
+Food Name
 
-📂 **Multi-Database Integration**
-- Firebase Firestore: Store user-submitted recipes
-- MySQL: Store meal planning data
-- SQLite: Used for local backups or fallback data
+Powered by:
 
----
+Gemini AI Vision Model
+🎤 AI Voice Recipe Reader (NEW)
 
-## 🛠️ Tech Stack
+Users can:
 
-| Layer          | Technologies Used |
-|----------------|-------------------|
-| **Frontend**   | HTML, CSS, JavaScript, Bootstrap |
-| **Backend**    | Python, Flask |
-| **Authentication** | Firebase Auth |
-| **Database**   | Firebase Firestore, MySQL, SQLite |
-| **Image Upload** | Firebase Storage |
-| **Others**     | dotenv, Flask extensions |
+Listen to recipes
+Pause recipe using voice command
+Resume recipe using voice command
+Supported Commands
+“Stop”
+“Start”
+“Resume”
 
----
+Built using:
 
-## 🖼️ Screenshots (Coming Soon)
+Speech Synthesis API
+Speech Recognition API
+📺 YouTube Recipe Video Integration (NEW)
 
-> Add your screenshots later:
+Automatically searches and displays:
 
-```markdown
-![Login Page](screenshots/login.png)
-![Submit Recipe](screenshots/submit_recipe.png)
-![Meal Planner](screenshots/meal_planner.png)
-🧩 Folder Structure
-bash
-Copy
-Edit
-flask-mykittchen-project/
+Recipe tutorial videos
+Cooking instructions
+Related recipe content
+
+Integrated with:
+
+YouTube Search & Embed
+📄 Recipe PDF Download (NEW)
+
+Users can:
+
+Download recipes as PDF
+Print recipes
+Save recipes offline
+📅 Meal Planning System
+
+Users can:
+
+Plan meals
+Save meal schedules
+Organize daily recipes
+
+Meal plans stored in:
+
+MySQL Database
+📸 Image Upload System
+Upload food images
+Upload recipe thumbnails
+Firebase Storage Integration
+Local Upload Support
+🔍 Search & Filtering
+
+Search recipes by:
+
+Recipe Name
+Ingredients
+Keywords
+
+Advanced filtering:
+
+Cuisine
+Diet Type
+Recipe Category
+🛡️ Security Features
+
+✅ Environment Variables (.env)
+✅ API Key Protection
+✅ Secure Authentication
+✅ Session Management
+
+🧠 AI Features Included
+Feature	Technology
+Nutrition Detection	Gemini AI
+Food Image Analysis	Gemini Vision
+Voice Commands	Web Speech API
+Recipe Audio Reading	Speech Synthesis
+YouTube Video Search	YouTube Embed
+PDF Generation	JavaScript Print API
+🛠️ Tech Stack
+Layer	Technologies Used
+Frontend	HTML, CSS, JavaScript, Bootstrap
+Backend	Python, Flask
+Database	SQLite, MySQL, Firebase Firestore
+AI	Gemini AI
+Authentication	Firebase Auth
+Storage	Firebase Storage
+ORM	Flask SQLAlchemy
+APIs	YouTube API, Gemini API
+Voice Features	Speech Recognition API
+PDF Export	JavaScript Print API
+📂 Folder Structure
+MyKittchen/
 │
-├── static/                # CSS, JS, Images
-├── templates/             # HTML templates
-├── app.py                 # Main Flask app
-├── firebase_config.py     # Firebase connection setup
-├── mysql_config.py        # MySQL DB connection
-├── recipe_routes.py       # Route logic
-├── .env                   # Environment variables
-├── requirements.txt       # Dependencies
-└── README.md              # This file
-⚙️ Setup & Installation
+├── static/
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── uploads/
+│   └── recipe_pdfs/
+│
+├── templates/
+│   ├── index.html
+│   ├── recipes.html
+│   ├── nutrition.html
+│   ├── nutrition_result.html
+│   ├── login.html
+│   ├── dashboard.html
+│   └── submit_recipe.html
+│
+├── app.py
+├── users.db
+├── recipes.db
+├── requirements.txt
+├── .env
+└── README.md
+⚙️ Installation & Setup
 📦 Prerequisites
 Python 3.x
-
 pip
-
-Firebase Project (Firestore + Auth + Storage)
-
-MySQL server
-
-🔧 Installation Steps
-bash
-Copy
-Edit
-# Clone the repository
+Firebase Project
+Gemini API Key
+MySQL Server
+🔧 Clone Repository
 git clone https://github.com/ragineedarade/flask-mykittchen-project.git
+
 cd flask-mykittchen-project
-
-# Create virtual environment
+🧪 Create Virtual Environment
+Windows
 python -m venv venv
-# Activate it
-# On Windows:
+
 venv\Scripts\activate
-# On Mac/Linux:
+Mac/Linux
+python3 -m venv venv
+
 source venv/bin/activate
-
-# Install dependencies
+📥 Install Dependencies
 pip install -r requirements.txt
-🔐 Firebase Setup
-Create a Firebase project with:
 
-Firestore database
+OR
 
-Authentication (Email/Password)
+pip install flask flask_sqlalchemy pillow requests werkzeug firebase-admin google-genai
+📁 Create Upload Folder
 
-Storage (for image uploads)
+Inside static folder create:
 
-🔑 Environment Variables
-Create a .env file at the root:
+static/uploads
+🔑 Gemini AI Setup
 
-env
-Copy
-Edit
-FIREBASE_API_KEY=your_api_key
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_STORAGE_BUCKET=your_storage_bucket
-MYSQL_USER=your_mysql_user
-MYSQL_PASSWORD=your_mysql_password
+Get API key from:
+
+Google AI Studio
+
+🔐 Environment Variables
+
+Create .env
+
+SECRET_KEY=your_secret_key
+
+FIREBASE_API_KEY=your_firebase_key
+
+MYSQL_USER=root
+
+MYSQL_PASSWORD=your_password
+
 MYSQL_DB=mykittchen
-SECRET_KEY=your_flask_secret_key
-▶️ Run the App
-bash
-Copy
-Edit
-flask run
-Visit: http://127.0.0.1:5000
 
-📊 Future Improvements
-User Profile Page
+GEMINI_API_KEY=your_gemini_api_key
+▶️ Run Application
+python app.py
 
-Meal Plan Calendar View
+Visit:
 
-Like / Favorite Recipes
+http://127.0.0.1:5000
+📸 Screenshots
+Home Page
+![Home](screenshots/home.png)
+Recipe Page
+![Recipes](screenshots/recipes.png)
+Nutrition Analyzer
+![Nutrition](screenshots/nutrition.png)
+AI Recipe Reader
+![Voice Assistant](screenshots/voice.png)
+🚀 Future Improvements
+AI Recipe Recommendation
+AI Meal Planner
+Daily Calorie Tracker
+BMI Calculator
+AI Diet Recommendation
+AI Chatbot Cooking Assistant
+Multi-language Voice Support
+Dark Mode
+Mobile App Version
+👩‍💻 Developed By
+Raginee Darade
+Python Developer
+AI Enthusiast
+Full Stack Developer
+Flask & AI Integration Developer
 
-AI-based Recipe Suggestions
+GitHub:
+Raginee Darade GitHub
 
-Admin Panel for Moderation
+⭐ Support
 
+If you like this project:
+
+⭐ Star the repository
+🍴 Fork the repository
+🧠 Contribute new features
+🚀 Share with others
