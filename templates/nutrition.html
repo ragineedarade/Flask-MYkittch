@@ -1,0 +1,17 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>AI Nutrition Analyzer</title>
+  </head>
+
+  <body>
+    <h1>Upload Food Image</h1>
+
+    <form action="/analyze_food" method="POST" enctype="multipart/form-data">
+      <input type="file" name="food_image" required />
+
+      <button type="submit">Analyze Food</button>
+    </form>
+  </body>
+</html>
